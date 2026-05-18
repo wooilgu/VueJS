@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="m-3">
+    <h1>JavaScript Event</h1>
+
+    <!-- inline Event -->
+    <button name="button 01" onclick="alert('Hello World')">Btn 01</button>
+    <button name="button 02" onclick="btn02Event()">Btn 02</button>
+    <button name="button ABC 03" onclick="btn03Event(event)">ABC 03</button>
+    <button name="button 04" onclick="btn04Event(event, 'lightgreen')">Btn 04</button>
+
+    <button name="button 05" id="btn05">Btn 05</button>
+    <button name="button 06" id="btn06">Btn 06</button>
+    <button name="button 07" id="btn07">Btn 07</button>
+    <button name="button 08" id="btn08">Btn 08</button>
+    <button name="button 09" id="btn09">Btn 09</button>
+  </div>
+
+  <script type="text/javascript">
+    const btn02Event = () => {
+      console.log('btn02 Event');
+      alert('Good Morning!!')
+    }
+    const btn03Event = (evt) => {
+      console.log(evt.target);
+      console.log(evt.target.name, evt.target.textContent)
+      evt.target.style.backgroundColor = 'orange';
+    }
+    const btn04Event = (evt, color) => {
+      evt.target.style.backgroundColor = color;
+    }
+
+    // addEventListener
+    // 실행 함수에 항상 딱 1개 event 객체의 참조값을 매개변수로 전달한다 - 필요없으면 기술 안해도 됨
+    document.getElementById('btn05').addEventListener('click', function (evt) {
+      alert('addEventListener')
+    });
+
+    // addEventListener 방식은 실행할 이벤트 핸들러의 매개변수가 없거나 event 객체 1개만 존재하는 경우는
+    // ()를 사용하지 않고 이름(값)으로 호출한다
+    const btn06Event = function () {
+      console.log('btn06 Event');
+      alert('Good Morning!!')
+    }
+    document.getElementById('btn06').addEventListener('click', btn06Event)
+
+    const btn07Event = function (evt) {
+      console.log(evt.target);
+      console.log(evt.target.name, evt.target.textContent)
+      evt.target.style.backgroundColor = 'orange';
+    }
+    document.getElementById('btn07').addEventListener('click', btn07Event)
+
+    const btn08Event = (color) => {
+      console.log(color);
+      document.getElementById('btn08').style.backgroundColor = color;
+    }
+    document.getElementById('btn08').addEventListener('click', function () {
+      btn08Event('red');
+    })
+
+    const btn09Event = (evt, color) => {
+      evt.target.style.backgroundColor = color;
+    }
+    document.getElementById('btn09').addEventListener('click', function (evt) {
+      btn09Event(evt, 'red')
+    })
+  </script>
+</body>
+
+</html>

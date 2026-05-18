@@ -1,0 +1,203 @@
+npm 명령 간략 설명
+
+  1. 버전 확인
+    npm -v
+
+  2. 검색
+    npmjs.com에서 검색하는 것이 보기 좋다.
+
+    npm search moduleName
+    ex] npm search jquery
+
+  3. 상세 정보
+    npm info(view) moduleName
+    ex] npm info jquery
+  
+  4. version 정보
+    npm info(view) moduleName version
+    npm info(view) moduleName versions
+
+    ex] 
+      npm info jquery version                 최신 버전 출력
+      npm info jquery versions                모든 버전 목록을 출력
+
+  5. 기본 설치
+    로컬 설치. 설치된 폴더와 하위 폴더에서만 사용 가능
+      npm install moduleName --save           npm 5 이하 버전에서 사용
+      npm i moduleName
+        설치한 모듈은 설치 경로 내부에 node_modules라는 폴더에 설치되며 해당 경로 하위에서만 호출할 수 있다
+
+      ex]
+        npm i jquery
+        npm i jquery bootstrap
+
+  6. 버전 지정해서 설치
+    npm i moduleName@4      => 4의 마지막 버전
+    ex] npm i bootstrap@4
+    
+    Major 버전 지정 설치 이외는 Minor, Patch 버전까지 모두 기술.
+    alpha, beta, rc 버전을 설치하는 경우도 이름이 마지막까지 매칭되어야 설치된다
+    ex] npm i bootstrap@4.1.1
+    ex] npm i bootstrap@5.3.0-alpha3
+      
+
+  7. 프로젝트 진행과 상관 없는 모듈 설치
+    npm install moduleName --save-dev       npm 5 이하 버전에서 사용
+    npm i -D moduleName
+      프로젝트 작성과는 상관없는 모듈을 설치하는 경우 (프로젝트 작성과는 상관 없는 모듈)
+      즉 test에 관련된 module(mocha), 문법 체크 module(eslint), 파일 포멧 module(prettier)
+
+    ex] npm i -D eslint
+
+  8. Global 설치. 컴 어느 위치에서도 사용 가능한 형태가 된다
+    npm install -g moduleName               npm 5 이하 버전에서 사용
+    npm i -g moduleName
+      설치한 모듈을 OS 어느 경로에서든지 호출할 수 있다
+
+    ex] npm i -g serve
+
+  9. 삭제
+    npm un -g moduleName        npm uninstall -g moduleName
+    npm un moduleName           npm uninstall moduleName
+
+    ex] npm un bootstrap
+
+  10. 설치 모듈 정보
+    npm ls
+    npm ls -g
+
+
+
+프로젝트 생성
+  1. 작업하기 전에 설치할 모듈을 관리하는 파일부터 작성한다.
+    npm init
+
+      package name: (chap01_javascript)   => 프로젝트 명 (대문자는 사용 불가)
+      version: (1.0.0)                    => 프로젝트 버전
+      description:                        => 프로젝트 설명
+      entry point: (index.js)             => 어느 파일 기준으로 실행 할 것인가
+      test command:                       => Local에 설치된 모듈을 실행할 명령을 기술
+      git repository:                     => git address
+      keywords:                           => npm search로 검색될 단어
+      author:                             => 작성자
+      license: (ISC)                      => 저작권 관련
+
+
+  2. npm init -y                           => 위의 설정을 기본값으로 자동 작성
+
+
+  3. 필요한 모듈 설치 
+    필요한 모듈을 위에서 학습한 형태로 i 또는 i -D 형태로 설치
+
+  4. 설치 후 node_modules가 설치 안되었거나 누락된 모듈이 있는 경우
+
+    npm i   or      npm install
+    package.json의 dependencies와 devDependencies를 재 설치해 준다
+
+    npm i --only=prod           dependencies만 설치
+    npm i --only=dev            devDependencies만 설치
+    
+
+
+실습 Babel
+  https://babeljs.io/
+
+  1. package.json 파일 생성
+    npm init -y
+
+
+  2. babel 모듈 설치 v7
+    1] 공통 모듈
+      npm i -D @babel/core @babel/cli
+
+    2] ES5로 변환 모듈
+      npm i -D @babel/preset-env
+
+    3] 변환
+      npx babel src/arrow.js -d dist
+      npx babel src/arrow.js -d dist --presets @babel/preset-env
+
+      - 전체 파일 변환
+      npx babel src -d dist
+      npx babel src -d dist --presets @babel/preset-env
+
+
+  3. babel.config.json 파일 작성
+    https://babeljs.io/docs/usage
+    
+    1] babel.config.json 라는 이름으로 새로운 파일 작성
+    2] 작성한 'babel.config.json' 파일에 다음을 기술
+      {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "edge": "17",
+                "firefox": "60",
+                "chrome": "67",
+                "safari": "11.1"
+              },
+              "useBuiltIns": "usage",
+              "corejs": "3.6.5"
+            }
+          ]
+        ]
+      }
+
+    3] 변환
+      --presets @babel/preset-env 생략해도 babel.config.json 설정에 맞게 변경된다
+
+      npx babel src -d dist
+
+
+  4. package.json - npm script
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "babel src -d dist"
+    },
+
+
+  5. 실행
+    npm run test
+    npm run build 
+
+    start, test 명령은 run을 생략하고 다음 명령으로 실행 가능
+      npm start
+
+Webpack 설정
+  1. 설정 파일 작성
+    npx create-new-webpack-app 프로젝트명
+
+    추가 모듈 설치가 필요하다는 메시지가 출력되면 설치한다.
+    
+    1. Which of the following JS solutions do you want to use? (Use arrow keys)
+      어떤 솔루션을 사용할 것인가?                                            [ ES6 ]
+
+    2. Do you want to use webpack-dev-server? (Y/n)
+      개발 서버를 사용할 것인가? (live-server와 같은 환경을 구축해 줄까)        [ Y ]
+
+    3. Do you want to simplify the creation of HTML files for your bundle? (Y/n)
+      간단한 번들용 HTML 파일을 생성할 것인가?                                 [ Y ]
+
+    4. Do you want to add PWA support? (Y/n)
+      PWA 지원을 추가 할 것인가?                                              [ N ]
+
+    5. Which of the following CSS solutions do you want to use? (Use arrow keys)
+      어떤 CSS 솔루션을 사용할 것인가?                                        [ CSS Only ]
+
+    6. Will you be using PostCSS in your project? (Y/n)
+      프로젝트에서 PostCSS를 사용할 예정인가?                                 [ N ]
+
+    7. Do you want to extract CSS for every file? (Use arrow keys)
+      모든 파일에서 CSS를 추출할 것인가(별로 파일로 추출할 것인가)?             [ Y ]
+
+    8. Do you like to install prettier to format generated configuration? (Y/n)
+      생성된 구성 포맷을 위해 Prettier를 설치할 것인가?                       [ Y ]
+
+    9. Pick a package manager: (Use arrow keys)
+      패키지 관리자 선택                                                    [ NPM ]
+
+
+  package.json 파일의 script 항목에 실행 명령이 존재한다
+  

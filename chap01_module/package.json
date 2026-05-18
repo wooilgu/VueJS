@@ -1,0 +1,28 @@
+{
+  "name": "chap01_module",
+  "version": "0.0.1",
+  "description": "javascript lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:arrow": "babel src/arrow.js -d dist --presets @babel/preset-env",
+    "build": "babel src/* -d dist"
+  },
+  
+  "keywords": [
+    "javascript",
+    "jquery"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "jquery": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.5"
+  }
+}
