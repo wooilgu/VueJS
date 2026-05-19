@@ -10,6 +10,10 @@ import A04MakeDOM from './components/A04MakeDOM.vue'
 import A05Computed from './components/A05Computed.vue'
 import A06Computed from './components/A06Computed.vue'
 import A07Watch from './components/A07Watch.vue'
+import A07WatchFetch from './components/A07WatchFetch.vue'
+import A08LifeCycle from './components/A08LifeCycle.vue'
+  
+
 
 </script>
 
@@ -17,13 +21,15 @@ import A07Watch from './components/A07Watch.vue'
   <div class="m-3">
     <h1>
       <IconOne />
-      A07Watch
+      Chap03 Directive
     </h1>
 
     <div>
+      <A08LifeCycle></A08LifeCycle>
+      <A07WatchFetch></A07WatchFetch>
       <A07Watch></A07Watch>
-      <A06Computed></A06Computed> 
-      <A05Computed></A05Computed>      
+      <A06Computed></A06Computed>
+      <A05Computed></A05Computed>
       <A04MakeDOM></A04MakeDOM>
       <A03Attribute></A03Attribute>
       <A02Reactive></A02Reactive>
