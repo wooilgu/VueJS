@@ -1,3 +1,4 @@
+
 <script setup>
 import { onBeforeMount, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, ref } from 'vue';
 
@@ -10,13 +11,13 @@ const contactList = ref([]);
 const isLoading = ref(false);
 
 const getContactList = search => {
-isLoading.value = true;
+  isLoading.value = true;
 
-fetch(baseURL + search)
-  .then(resp => resp.json())
-  .then(data => (contactList.value = data))
-  .catch(error => console.error(error))
-  .finally(() => (isLoading.value = false));
+  fetch(baseURL + search)
+    .then(resp => resp.json())
+    .then(data => (contactList.value = data))
+    .catch(error => console.error(error))
+    .finally(() => (isLoading.value = false));
 };
 
 // 컴포넌트가 특정한 시점(화면표시, 화면에서 삭제 등)에 호출될 함수를 
@@ -25,7 +26,8 @@ fetch(baseURL + search)
 
 
 // + 버튼 배경색을 오렌지로 변경
-
+// template를 읽기 전 상태. 따라서 DOM 요소를 참조할 수 없다.
+// document.querySelector('#plus').style.backgroundColor = 'orange';
 
 // beforeMount => DOM 생성 전.
 onBeforeMount(() => {
@@ -34,7 +36,10 @@ onBeforeMount(() => {
 // mounted => DOM 생성 완료 후.
 onMounted(() => {
   console.log('onMounted');
-  getContactList('ad');
+  getContactList('jo');
+
+  document.querySelector('#plus').style.backgroundColor = 'orange';
+  document.querySelector('#minus').style.backgroundColor = 'gray';
 });
 
 // beforeUpdate => 상태 변경 전
@@ -51,6 +56,8 @@ onUpdated(() => {
 // clearInterval, removeEventListener, disconnect()
 onBeforeUnmount(() => {
   console.log('onBeforeUnmount');
+
+  // 사용한 watch 함수를 정리
 });
 
 // unmounted => DOM에서 제거된 상태
@@ -58,6 +65,8 @@ onBeforeUnmount(() => {
 onUnmounted(() => {
   console.log('unMounted');
 });
+
+console.log('setup이 모두 실행됨.....')
 </script>
 
 <template>
@@ -65,8 +74,8 @@ onUnmounted(() => {
   
   <div class="mb-3">
     Num: {{num}}<br>
-    <button v-on:click="increase()">+1</button>
-    <button v-on:click="decrease()">-1</button>
+    <button v-on:click="increase()" id="plus">+1</button>
+    <button v-on:click="decrease()" id="minus">-1</button>
   </div>
 
   <div class="mb-5">

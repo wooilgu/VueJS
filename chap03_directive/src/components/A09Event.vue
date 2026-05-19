@@ -1,3 +1,4 @@
+
 <script setup>
   import { ref } from 'vue';
   
@@ -9,6 +10,7 @@
   const incThree = (x) => num.value += x;
   const incFour = (evt) => {
     num.value += 4;
+    evt.target.style.backgroundColor = 'orange';
   };
   const incFive = (x, color, evt) => {
     num.value += x;
@@ -31,6 +33,11 @@
   };
   const one = (evt) => {
     console.log(evt.target, evt.currentTarget);
+    if(true) {
+      // 상위 요소에 이벤트 전파(bubbing 단계)를 중지한다 
+      // 즉 상위 요소의 click 이벤트는 모두 실행되지 않음
+      evt.stopPropagation();
+    }
   };
   const two = (evt) => {
     console.log(evt.target, evt.currentTarget);
@@ -67,28 +74,28 @@
         Num: {{num}}<br>
   
         <!-- inline event 방식 -->
-        <button>+1</button>
-        <button>+2</button>
-        <button>+3</button>
-        <button>+4</button>
-        <button>+5</button>
+        <button v-on:click="num++">+1</button>
+        <button v-on:click="incTwo()">+2</button>
+        <button v-on:click="incThree(3)">+3</button>
+        <button v-on:click="incFour($event)">+4</button>
+        <button v-on:click="incFive(5, 'gray', $event)">+5</button>
         
         <!-- addEventListener 방식 => 매개변수가 없거나 event 객체 1개라면 () 없이 호출한다 -->
-        <button>-1</button>
-        <button>-2</button>
-        <button>-3</button>
-        <button>-4</button>
+        <button @click="decOne">-1</button>
+        <button @click="decTwo">-2</button> <!-- 에러 제일 많이 발생 -->
+        <button @click="() => decThree(3)">-3</button>
+        <button @click="(evt) => decFour(4, evt)">-4</button>
         
         <!-- .once => 이벤트 핸들러가 1번만 실행된다 -->
-        <button>once</button>
+        <button @click.once="decOne">once</button>
         <!-- shift, alt, ctrl, meta, left, middle, right -->
-        <button>Key</button>
+        <button @click.shift="decOne">Key</button>
       </div>
       
-      <div id="container" class="mb-3">
-        <div id="inner">ONE</div>
+      <div id="container" class="mb-3" @click="outer">
+        <div id="inner" @click="one">ONE</div>
         <!-- @click.stop => evt.stopPropagation(); -->
-        <div id="inner">TWO</div>
+        <div id="inner" @click.stop="two">TWO</div>
       </div>
     </div>
   

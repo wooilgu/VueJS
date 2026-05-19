@@ -12,6 +12,8 @@ import A06Computed from './components/A06Computed.vue'
 import A07Watch from './components/A07Watch.vue'
 import A07WatchFetch from './components/A07WatchFetch.vue'
 import A08LifeCycle from './components/A08LifeCycle.vue'
+import A09Event from './components/A09Event.vue'  
+
   
 
 
@@ -21,10 +23,11 @@ import A08LifeCycle from './components/A08LifeCycle.vue'
   <div class="m-3">
     <h1>
       <IconOne />
-      Chap03 Directive
+      A09LifeCycle LifeCycle
     </h1>
 
     <div>
+      <A09Event></A09Event>
       <A08LifeCycle></A08LifeCycle>
       <A07WatchFetch></A07WatchFetch>
       <A07Watch></A07Watch>
