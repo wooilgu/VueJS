@@ -1,6 +1,7 @@
 
+<!-- eslint-disable no-unused-vars -->
 <script setup>
-import { ref } from 'vue';
+import { isRef, ref } from 'vue';
 
 // 일반변수
 let count = 10;
@@ -21,6 +22,35 @@ const onAdd = (x=0, y=0) => `${x} + ${y} = ${x + y}`;
 // 상태 변수 변경
 // console.log(name);
 const changeName = (x) => name.value = x;
+const changeAge = (x) => age.value = x;
+const changeCheck = () => check.value = !check.value;
+
+const addArray = () => {
+  const random = Math.ceil(Math.random() * 100);    // 1 ~ 100
+  arr.value.push(random);
+}
+const updateArray = (idx, value) => arr.value[idx] = value;
+const deleteArray = (idx) => arr.value.splice(idx, 1);
+
+const addUser = (key, value) => user.value[key] = value;
+const updateUser = (key, value) => user.value[key] = value;
+const deleteUser = (key) => delete user.value[key];
+
+/*
+// 상태 변수를 체크
+console.log(isRef(count));        // false
+console.log(isRef(name));         // true
+console.log(isRef(arr));          // true
+
+// ** 주의 **
+// ref로 선언한 변수에서 값을 꺼내면 상태가 깨진다 
+const num = age.value;
+console.log(num, typeof num, isRef(num));   // 20, 'number', false
+
+// 값을 꺼내 다시 상태 변수로 정의
+const numRef = ref(age.value);  
+console.log(isRef(numRef));         // true
+*/
 </script>
 
 <template>
@@ -45,16 +75,16 @@ const changeName = (x) => name.value = x;
   <div class="mb-5">
     <button @click="increaseCount()">INC</button>
     <button @click="changeName('방자')">NAME</button>
-    <button>AGE</button>
-    <button>CHECK</button>
+    <button @click="changeAge(2000)">AGE</button>
+    <button @click="changeCheck()">CHECK</button>
 
-    <button>ADD ARRAY</button>
-    <button>UPDATE ARRAY</button>
-    <button>DELETE ARRAY</button>
+    <button @click="addArray()">ADD ARRAY</button>
+    <button @click="updateArray(1, 3000)">UPDATE ARRAY</button>
+    <button @click="deleteArray(1)">DELETE ARRAY</button>
 
-    <button>ADD USER</button>
-    <button>UPDATE USER</button>
-    <button>DELETE USER</button>
+    <button @click="addUser('address', 'Seoul')">ADD USER</button>
+    <button @click="updateUser('address', 'Busan')">UPDATE USER</button>
+    <button @click="deleteUser('address')">DELETE USER</button>
   </div>
 </template>
 

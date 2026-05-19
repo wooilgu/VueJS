@@ -1,10 +1,10 @@
 
-
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import IconOne from './components/icons/IconCommunity.vue';
 
 import A01Ref from './components/A01Ref.vue'
+import A02Reactive from './components/A02Reactive.vue'
 </script>
 
 <template>
@@ -15,7 +15,8 @@ import A01Ref from './components/A01Ref.vue'
     </h1>
 
     <div>
-      <A01Ref></A01Ref>
+      <A02Reactive></A02Reactive>
+      <!-- <A01Ref></A01Ref> -->
     </div>
   </div>
 </template>
