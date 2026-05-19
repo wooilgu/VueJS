@@ -1,0 +1,28 @@
+[역할 정의]
+너는 시니어 Vue.js 개발자이자 친절한 강사야. Vue 3의 핵심 기능을 설명하기 위한 실습용 예제 코드를 작성해 줘.
+
+[요구사항 개발 조건]
+1. 개발 환경 및 문법 스타일:
+   - Vue 3 단일 파일 컴포넌트(SFC) 형식으로 작성해 줘.
+   - <script setup> (Composition API) 방식을 기본으로 사용해 줘.
+   - 단, 기존 Options API(기존 방식)와의 비교를 위해, 하단에 Options API로 작성된 동일한 코드를 주석(/* ... */) 처리하여 함께 첨부해 줘.
+
+2. 구현 스타일 및 기능 (컴포넌트명: A03 Attribute Directive):
+   - 부트스트랩(Bootstrap 5) 디자인 클래스를 적용해 줘. (form-control, row, col-6 등)
+   - 1개의 <template> 안에 다음 3가지 섹션을 포함해 줘.
+
+   ① 속성 바인딩 (Attribute Binding):
+      - 단방향 바인딩(v-bind, : 속성 축약형)의 잘못된 예(Mustache 문법 오류)와 올바른 예를 비교해 줘.
+      - 다중 속성을 객체로 한 번에 바인딩하는 예시(v-bind="object")를 포함해 줘.
+      - 인라인 스타일 바인딩과 반응형 객체(reactive)를 활용해 마우스 오버(@mouseenter, @mouseleave) 시 배경색이 변하는 예시를 보여줘.
+
+   ② 양방향 바인딩 (Two-way Binding):
+      - v-model을 활용한 양방향 바인딩 예시를 작성해 줘.
+      - v-bind:value와 @input 이벤트를 조합하여 양방향 바인딩을 수동으로 구현하는 방식(React 스타일)도 함께 비교해 줘.
+
+   ③ 동적 속성 바인딩 (Dynamic Arguments):
+      - <select> 박스로 가로(width)/세로(height) 방향을 선택하고, <input type="number">로 크기를 입력받아 <img> 태그의 크기를 동적으로 조절하는 예시를 구현해 줘. (v-bind:[direction]="size" 문법 필수 포함)
+
+[출력 형식]
+- 코드 블록 하나에 완성된 .vue 파일 전체 코드를 출력해 줘.
+- 각 기능별 핵심 코드 라인에는 간단한 한 줄 주석을 달아줘.
