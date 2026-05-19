@@ -1,4 +1,7 @@
+
 <script setup>
+import { computed, ref } from 'vue';
+
 const countries = [
   { no:1,  name : "미국", capital : "워싱턴DC", region:"america" },
   { no:2,  name : "프랑스", capital : "파리", region:"europe" },
@@ -18,15 +21,38 @@ const countries = [
   { no:16,  name : "서사모아", capital : "아피아", region:"oceania" }
 ];
 
+const keyword = ref('');
+
+// dom 요소와 연결
+// <input ... ref="inputElem"> 형태로 연결
+const inputElem = ref(null);
+
+// keyword는 사용자가 검색어 입력 => keyword 상태변수 변경 => computed 함수 내부에셔
+// keyword 상태변수 사용중 => 함수로써 호출
+const searchData = computed(() => {
+  const newArr = countries.filter((item) => {
+    if(item.name.includes(keyword.value)) return true;
+    else return false;
+  });
+
+  return newArr;
+});
+
+const changeKeyword = () => {
+  console.log(inputElem.value)
+  keyword.value = (inputElem.value).value.trim();
+  // keyword.value = document.querySelector('input[name="search"]').value.trim();
+}
+
 </script>
 
 <template>
   <h3>A06 Computed</h3>
 
   <div class="input-group">
-    <input type="text" name="search" class="form-control">
+    <input type="text" name="search" class="form-control" ref="inputElem">
     <div class="input-group-append">
-      <button class="btn btn-primary">SEARCH</button>
+      <button class="btn btn-primary" @click="changeKeyword()">SEARCH</button>
     </div>
   </div>
   <br>
@@ -38,7 +64,7 @@ const countries = [
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in countries" :key="item.no">
+      <tr v-for="item in searchData" :key="item.no">
         <td>{{ item.no }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.capital }}</td>

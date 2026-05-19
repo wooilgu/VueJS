@@ -1,6 +1,8 @@
 
+
+<!-- eslint-disable no-unused-vars -->
 <script setup>
-  import { computed, reactive, ref } from 'vue';
+  import { computed, isRef, reactive, ref } from 'vue';
   
   const data = reactive({ name: '', address: '', num: 0 });
   
@@ -32,7 +34,10 @@
   */
   const animal = ref(['강아지', '고양이']);
   const addAnimal = () => animal.value.push('열대어');
-  const animalValue = () => animal.value.length * 100;
+  const animalValue = computed(() => {
+    console.log('animal이 변경됨...')
+    return animal.value.length * 100
+  });
 
   const product = reactive({
     name: 'TV',
@@ -40,6 +45,13 @@
     quantity: 1,
     discountRate: 0.1
   });
+
+  // computed의 결과값은 ref로 정의된 상태변수로 반환된다
+  const totalPrice = computed(() => product.price * product.quantity);
+  // console.log(isRef(totalPrice));     // true
+
+  // totalPrice 함수가 computed 즉 ref 변수다. 따라서 참조는 value를 붙여 사용한다
+  const discountPrice = computed(() => totalPrice.value * (1 - product.discountRate));
   
   </script>
   
@@ -50,7 +62,7 @@
       <h5>1. Method</h5>
   
       <div class="mb-3">
-        onAdd: {{ onAdd(10, 20) }}<br />
+        onAdd: {{ onAdd(10, 20) }}
       </div>
   
       <div class="mb-2">
@@ -76,7 +88,8 @@
       <h5>2. Computed</h5>
   
       <div class="mb-3">
-        {{ animal[0] }} / {{ animal[1] }} / {{ animal[2] }} / {{  animal.length }} / {{  animalValue() }} <br />
+        {{ animal[0] }} / {{ animal[1] }} / {{ animal[2] }} 
+          / {{ animal.length }} / {{ animalValue }}<br />
         <button class="btn btn-primary btn-sm" @click="addAnimal">ADD</button>
       </div>
   
@@ -92,9 +105,9 @@
       </div>
   
       <div class="mb-3">
-        Total: <br />
-        Total: <br />
-        Discount: 
+        Total: {{ product.quantity * product.price }} <br />
+        Total: {{ totalPrice }} <br />
+        Discount: {{ discountPrice }}
       </div>
     </div>
   </template>

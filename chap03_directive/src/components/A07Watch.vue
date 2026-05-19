@@ -1,5 +1,6 @@
+
 <script setup>
-  import { reactive, ref } from 'vue';
+  import { computed, reactive, ref, watch } from 'vue';
   
   const quantity = ref(1);
   const total = ref(0);
@@ -8,8 +9,29 @@
     tax: 0,
   });
 
+  // computed
+  const TotalPrice = computed(() => (quantity.value * priceState.price * (priceState.tax + 1)).toFixed(2));
 
   // watch
+  // 상태가 변경되면 화면 갱신은 해 준다 (기본 동작)
+  // watch로 정의하면 기본동작(화면갱신) 이외의 처리를 추가 할 수 있다
+  // view(template)에는 아무것도 추가하지 않는다
+  const watchQuantity = watch(
+    // quantity,                 // 상태변수 (단일값)
+    () => quantity.value,     // 객체로 참조하는 경우
+    (newVal, oldVal) => {     // 위의 상태변수가 변경될때마다 실행될 메서드
+      total.value = (newVal * priceState.price * (priceState.tax + 1)).toFixed(2);
+    },
+    {
+      immediate: true,        // 최초 렌더링될때 실행 여부. true => 실행
+      flush: 'post'
+    }
+  )
+
+  const stopWatch = () => {
+    // watch 함수가 메모리에서 삭제된다 => watch 중단
+    watchQuantity();
+  }
   
   /*
   'pre' (기본값)
@@ -39,9 +61,10 @@
       </div>
   
       <div class="mb-3">
-        TotalPrice: <br />
+        TotalPrice: {{ TotalPrice }}<br />
         Total: {{ total }}<br />
-        <button class="btn btn-outline-danger btn-sm">STOP</button>
+        <button class="btn btn-outline-danger btn-sm" @click="stopWatch()">STOP</button>
       </div>
     </div>
   </template>
+
