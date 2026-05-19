@@ -1,13 +1,26 @@
+
 <script setup>
   import { computed, reactive, ref } from 'vue';
   
   const data = reactive({ name: '', address: '', num: 0 });
   
   // method
-  
+  const onAdd = (x=0, y=0) => `${x} + ${y} = ${x + y}`;
   
   // Event Handler
-  
+  const changeString = (evt, num) => {
+    // console.log(evt);
+    // console.log(evt.target);        // 이벤트가 발생된 요소
+    // console.log(evt.target.name);
+    const value = evt.target.value.trim();
+    if(value.length > num) evt.target.value = value.slice(0, num);
+    else data[evt.target.name] = value;
+  }
+  const changeNumber = (evt) => {
+    let value = Number(evt.target.value.trim());
+    if(Number.isNaN(value)) value = 0;
+    data[evt.target.name] = value;
+  }
   
   /*
     계산된 속성이라한다. 기존의 data에 변수를 이용해서 새로운 값을 산출하는 경우 사용
@@ -19,6 +32,8 @@
   */
   const animal = ref(['강아지', '고양이']);
   const addAnimal = () => animal.value.push('열대어');
+  const animalValue = () => animal.value.length * 100;
+
   const product = reactive({
     name: 'TV',
     price: 20000,
@@ -35,22 +50,25 @@
       <h5>1. Method</h5>
   
       <div class="mb-3">
-        onAdd: 
+        onAdd: {{ onAdd(10, 20) }}<br />
       </div>
   
       <div class="mb-2">
         <label for="name" class="form-label">Name: {{ data.name }}</label>
-        <input type="text" id="name" name="name" class="form-control" :value="data.name" />
+        <input type="text" id="name" name="name" class="form-control" 
+          v-bind:value="data.name" @input="changeString($event, 5)" />
       </div>
   
       <div class="mb-3">
         <label for="address" class="form-label">Address: {{ data.address }}</label>
-        <input type="text" id="address" name="address" class="form-control" :value="data.address" />
+        <input type="text" id="address" name="address" class="form-control" 
+          v-bind:value="data.address" @input="changeString($event, 10)" />
       </div>
   
       <div class="mb-3">
         <label for="num" class="form-label">Num: {{ data.num }}</label>
-        <input type="text" id="num" name="num" class="form-control" :value="data.num" />
+        <input type="text" id="num" name="num" class="form-control" 
+          :value="data.num" @input="changeNumber($event)" />
       </div>
     </div>
   
@@ -58,7 +76,7 @@
       <h5>2. Computed</h5>
   
       <div class="mb-3">
-        {{ animal[0] }} / {{ animal[1] }} / {{ animal[2] }} / <br />
+        {{ animal[0] }} / {{ animal[1] }} / {{ animal[2] }} / {{  animal.length }} / {{  animalValue() }} <br />
         <button class="btn btn-primary btn-sm" @click="addAnimal">ADD</button>
       </div>
   
@@ -155,3 +173,4 @@ export default {
   </div>
 </template>
 -->
+
