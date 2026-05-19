@@ -44,10 +44,18 @@
   };
   
   const daum = (evt) => {
-    console.log('daum');
+    // 브라우저가 DOM 요소를 생성할때 추가한 기본 자바스크립트를 실행하지 않도록 처리
+    evt.preventDefault();
+
+    const check = window.confirm('이동하시겠습니까');
+    if(check) location.assign(evt.target.href);
+    // console.log('daum');
   };
   const naver = () => {
     console.log('naver');
+
+    const check = window.confirm('이동하시겠습니까');
+    if(check) location.assign('http://naver.com');
   };
   
   const keyEventOne = (evt) => {
@@ -59,7 +67,10 @@
     console.log(`Shift: ${evt.shiftKey}, Ctrl: ${evt.ctrlKey}, Alt: ${evt.altKey}, Meta: ${evt.metaKey}, `);
   
     // shift key가 눌러진 상태에서 home 키가 눌러졌다면..
-  
+    if(evt.keyCode === 36 && evt.shiftKey) location.assign('http://google.com')
+    if(evt.keyCode === 27) evt.target.value = '';       // esc
+    if(evt.keyCode === 13) alert(evt.target.value);     // enter
+
   };
   const keyEventTwo = () => location.assign('http://www.google.com');
   const escEvent = () => (name.value = '');
@@ -100,17 +111,20 @@
     </div>
   
     <div class="mb-3">
-        <a href="http://www.daum.net">DAUM</a> | 
+        <a href="http://www.daum.net" @click="daum">DAUM</a> | 
         <!-- @click.prevent => evt.preventDefault(); -->
-        <a href="http://www.naver.com">NAVER</a>
+        <a href="http://www.naver.com" @click.prevent="naver">NAVER</a>
     </div>
     <br>
   
     <div class="mb-5">
-      JavaScript: <input type="text" class="form-control" /> <br />
-      Vue: <input type="text" class="form-control" /> <br />
-      esc: <input type="text" class="form-control" v-model="name" /> <br />
-      Enter: <input type="text" class="form-control" v-model="msg" /> <br />
+      JavaScript: <input type="text" class="form-control" @keyup="keyEventOne" /> <br />
+      <!-- 해당 조합키가 눌러진 경우만 해당 이벤트 핸들러를 실행 -->
+      Vue: <input type="text" class="form-control" @keydown.a.shift="keyEventTwo" /> <br />
+      esc: {{ name }} 
+      <input type="text" class="form-control" v-model="name" @keydown.esc="escEvent" /> <br />
+      Enter: {{ msg }} 
+      <input type="text" class="form-control" v-model="msg" @keydown.enter="enterEvent" /> <br />
     </div>
   </template>
   
