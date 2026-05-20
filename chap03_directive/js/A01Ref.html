@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    Name: {{ name }}
+  </div>
+
+  <div id="app" class="m-3" v-cloak>
+    <h3>A01 상태변수 - Ref</h3>
+
+    <div class="mb-3">
+      <div class="mb-2">
+        Count: {{ count }}
+      </div>
+
+      <p>
+        변수의 값이 undefined, null 인 경우는 화면에 아무것도 표시하지 않는다. <br>
+        Name: {{ name }}<br />
+        Age: {{ age }} <br />
+        Check: {{ check ? '동의' : '동의 안함' }} <br />
+        Array: {{ arr[0] }} / {{ arr[1] }} / {{ arr[2] }} <br />
+        User: {{ user.name }} / {{ user.age }} / {{ user.address }} <br />
+        Function: {{ onAdd(10, 20) }}
+      </p>
+    </div>
+
+    <div class="mb-5">
+      <button @click="increaseCount()">INC</button>
+      <button @click="changeName('방자')">NAME</button>
+      <button @click="changeAge(2000)">AGE</button>
+      <button @click="changeCheck()">CHECK</button>
+
+      <button @click="addArray()">ADD ARRAY</button>
+      <button @click="updateArray(1, 3000)">UPDATE ARRAY</button>
+      <button @click="deleteArray(1)">DELETE ARRAY</button>
+
+      <button @click="addUser('address', 'Seoul')">ADD USER</button>
+      <button @click="updateUser('address', 'Busan')">UPDATE USER</button>
+      <button @click="deleteUser('address')">DELETE USER</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.5.34/dist/vue.global.min.js"></script>
+  <script>
+    const { createApp, ref, isRef } = Vue;
+
+    createApp({
+      setup() {
+        // 일반변수
+        let count = 10;
+        const increaseCount = () => count++;
+
+        // 변수의 값이 변경되면 변경된 값을 기반으로 화면을 재 갱신하는 변수 => 상태변수
+        // 이 상태변수는 값이 변경되면 즉각 변경된 값 기반으로 화면을 재 구성한다
+        // template에서는 "변수명"으로 참조
+        // setup에서는 "변수명.value"로 참조
+        const name = ref('Adam');
+        const age = ref(20);
+        const check = ref(true);
+        const arr = ref([10, 11]);
+        const user = ref({ name: '홍길동', age: 30 });
+
+        const onAdd = (x = 0, y = 0) => `${x} + ${y} = ${x + y}`;
+
+        // 상태 변수 변경
+        // console.log(name);
+        const changeName = (x) => name.value = x;
+        const changeAge = (x) => age.value = x;
+        const changeCheck = () => check.value = !check.value;
+
+        const addArray = () => {
+          const random = Math.ceil(Math.random() * 100);    // 1 ~ 100
+          arr.value.push(random);
+        }
+        const updateArray = (idx, value) => arr.value[idx] = value;
+        const deleteArray = (idx) => arr.value.splice(idx, 1);
+
+        const addUser = (key, value) => user.value[key] = value;
+        const updateUser = (key, value) => user.value[key] = value;
+        const deleteUser = (key) => delete user.value[key];
+
+        // 상태 변수를 체크
+        console.log(isRef(count));        // false
+        console.log(isRef(name));         // true
+        console.log(isRef(arr));          // true
+
+        // ** 주의 **
+        // ref로 선언한 변수에서 값을 꺼내면 상태가 깨진다 
+        const num = age.value;
+        console.log(num, typeof num, isRef(num));   // 20, 'number', false
+
+        // 값을 꺼내 다시 상태 변수로 정의
+        const numRef = ref(age.value);
+        console.log(isRef(numRef));         // true
+
+        return {
+          count, name, age, check, arr, user, num, numRef,
+          increaseCount, changeName, changeAge, changeCheck, onAdd,
+          addArray, updateArray, deleteArray, addUser, updateUser, deleteUser,
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

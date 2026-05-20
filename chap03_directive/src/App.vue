@@ -14,6 +14,8 @@ import A07WatchFetch from './components/A07WatchFetch.vue'
 import A08LifeCycle from './components/A08LifeCycle.vue'
 import A09Event from './components/A09Event.vue'  
 import A10Model from './components/A10Model.vue'
+import A11RefElem from './components/A11RefElem.vue'
+
 
   
 
@@ -24,10 +26,11 @@ import A10Model from './components/A10Model.vue'
   <div class="m-3">
     <h1>
       <IconOne />
-      A10Model Model
+      A11RefElem Model
     </h1>
 
     <div>
+      <A11RefElem></A11RefElem>
       <A10Model></A10Model>
       <A09Event></A09Event>
       <A08LifeCycle></A08LifeCycle>

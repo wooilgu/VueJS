@@ -16,6 +16,7 @@ const data = reactive({
   person: {},
   comment: '',
 });
+// 조작할 변수가 아님 => 일반 변수
 const countries = ['대한민국', '미국', '프랑스', '스페인', '독일', '필리핀', '포르투칼'];
 const teams = ['한화', '롯데', 'NC', '기아', '삼성', '두산', '엘지', '넥센', 'SSG'];
 
@@ -114,22 +115,22 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       CheckBox: {{ data.fruit }}
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fruit1" value="APPLE">
+        <input class="form-check-input" type="checkbox" id="fruit1" value="APPLE" v-model="data.fruit">
         <label class="form-check-label" for="fruit1">사과</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fruit2" value="BANANA">
+        <input class="form-check-input" type="checkbox" id="fruit2" value="BANANA" v-model="data.fruit">
         <label class="form-check-label" for="fruit2">바나나</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fruit3" value="MELON">
+        <input class="form-check-input" type="checkbox" id="fruit3" value="MELON" v-model="data.fruit">
         <label class="form-check-label" for="fruit3">멜론</label>
       </div>
     </div>
 
     <div class="mb-3">
       SelectBox:{{ data.country }}
-      <select class="form-select">
+      <select class="form-select" v-model="data.country">
         <option value="">선택해주세요</option>
         <option v-for="item in countries" :key="item">{{ item }}</option>
       </select>
@@ -137,7 +138,7 @@ const changeText = (evt, num) => {
 
     <div class="mb-3">
       SelectBox Multi: {{ data.fourTeam }}
-      <select class="form-select" multiple size="5">
+      <select class="form-select" multiple size="5" v-model="data.fourTeam">
         <option v-for="team in teams" :key="team">{{ team }}</option>
       </select>
     </div>
