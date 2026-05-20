@@ -1,33 +1,59 @@
 <script setup>
+import { reactive, ref } from 'vue';
 import A03EmitChild from './children/A03EmitChild.vue';
+
+
+const num = ref(0);
+const getNumber = (evt) => {
+  // 4. 자식 컴포넌트에서 사용자 이벤트가 발생되면 전달된 값이 evt
+  // 그 값을 현재 컴포넌트의 상태변수에 대입 => 화면에 갱신
+  console.log(evt);
+  num.value = evt;
+}
+
+const state = reactive({ 
+  num: '', 
+  name: '', 
+  arr: [], 
+  user: {} ,
+  changenum() {},
+  changeUser() {}, 
+});
+const getObject = (evt) => {
+  console.log(evt);
+  state.value = evt;
+}
+
+
+
 </script>
 
 <template>
   <h3>A03 Emits</h3>  
 
   <div class="mb-3">
-    Number: <br>
 
     <!-- 
       data는 객체. 객체의 속성값이 없으면 에러가 아닌 undefined. vue는 null과 undefined는 화면 출력 안함 
     -->
-    Number: <br>
-    Name: <br />
+    Number: {{ state.num }} <br>
+    Name: {{ state.name }}<br />
 
     <!-- 
       data 객체는 존재. arr 객체는 존재 안함. 없는 객체(undefined)에 
       undefined[0], undefined.name, undefined() 형태로는 사용할 수 없다
     -->
-    Array: <br />
-    User: <br>
-    <button>NUM</button>
-    <button>USER</button>
+    Array:{{ state.arr?.[0] }} / {{ state.arr?.[1] }} // {{ state.arr?.[2] }}<br />
+    User: {{ state.user?.name }} // {{ state.user?.age }} / {{  state.user?.address }}<br>
+    <button @click="state.changenum">NUM</button>
+    <button @click="state.changeUser">USER</button>
   </div>
 
   <hr>
 
   <div class="mb-5">
-    <A03EmitChild></A03EmitChild>
+    <!-- 3. 이벤트가 발생하면 감지 후 실행할 메서드를 지정  -->
+    <A03EmitChild @numEvent="getNumber" @objEvent="getObject"></A03EmitChild>
   </div>
 </template>
 

@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref } from 'vue';
 
@@ -8,6 +9,27 @@ const user = ref({ name: 'HungBu', age: 20 })
 
 const changeNum = () => num.value = 20;
 const changeUser = () => user.value.name = '흥부';
+
+// 부모 컴포넌트에게 값 전달 => Event를 이용한다
+// 1. 커스텀 이벤트를 생성한다
+const emits = defineEmits(['numEvent', 'objEvent']);
+
+const sendNumber = () => {
+  // 2. 이벤트를 발생
+  emits('numEvent', num.value);     // 상태를 전달하지 말고, 값으로 전달한다
+}
+const sendObject = () => {
+  // 2. 이벤트를 발생
+  emits('objEvent', {
+    num: num.value,
+    name: name.value,
+    arr: [...arr.value],            // ...arr.value => arr: 10, 20
+    user: { ...user.value },
+    changeNum,
+    changeUser,
+  });
+}
+
 </script>
 
 <template>
@@ -25,8 +47,8 @@ const changeUser = () => user.value.name = '흥부';
   </div>
 
   <div class="mb-5">
-    <button class="btn btn-primary">NumEvent</button>{{ ' ' }}
-    <button class="btn btn-primary">ObjEvent</button>
+    <button class="btn btn-primary" @click="sendNumber">NumEvent</button>{{ ' ' }}
+    <button class="btn btn-primary" @click="sendObject">ObjEvent</button>
   </div>
 </template>
 
@@ -77,3 +99,4 @@ export default {
   </div>
 </template>
 -->
+

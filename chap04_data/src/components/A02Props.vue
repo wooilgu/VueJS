@@ -17,6 +17,8 @@ const onAdd = (x, y) => `${x} + ${y} = ${x + y}`;
 // 자식 컴포넌트에 속성으로 전달 => 자식이 호출 => 부모의 이벤트 핸들러 실행됨 =>
 // 부모의 상태 변경 => 부모 리 렌더링 => 자식 리 렌더링(값 동기화 완료)
 const changeAddress = (str) => address.value = str;
+const updateArray = (idx, value) => arr.value[idx] = value;
+const changeUserName = (value) => user.value.name = value;
 </script>
 
 <template>
@@ -29,12 +31,17 @@ const changeAddress = (str) => address.value = str;
         => 자식은 값을 받아서 그 값을 기준으로 새로운 값을 생성해서 사용
         => EX] time 값이 전달되면 시간 출력, data 전달되면 날짜 출력
     -->
-    <A02PropsOne today="date"></A02PropsOne>
+    <A02PropsOne today="date" name="놀부" v-bind:age="10" :check="true" isChecked
+      :add="address" :arr="arr" :user="user" :onAdd="onAdd"
+      :updateArray="updateArray" :changeUserName="changeUserName"
+    ></A02PropsOne>
     <A02PropsOne today="time"></A02PropsOne>
   </div>
   
   <div class="mb-3">
-    <A02PropsTwo></A02PropsTwo>
+    <A02PropsTwo  today="date" name="흥부" v-bind:age="10" :check="true" isChecked
+      :add="address" :arr="arr" :user="user" :onAdd="onAdd"></A02PropsTwo>
+    <A02PropsTwo  today="date"></A02PropsTwo>
   </div>
 
   <div class="mb-5">
