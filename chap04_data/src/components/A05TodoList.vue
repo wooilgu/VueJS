@@ -12,7 +12,27 @@ const getTodoList = () => {
     { id: 3, text: '세 번째 할 일', done: false },
   ]
 }
+
 const todoList = ref([]);
+// const count = ref(4)
+
+const addTodo = (text) => {
+  // const todo = { id: count.value++, text, done: false };
+  const cnt = todoList.value.at(-1) ? todoList.value.at(-1).id + 1 : 1;
+  const todo = { id: cnt, text, done: false };
+  todoList.value.push(todo);
+}
+
+const updateTodo = (id) => {
+  // id 기반으로 배열의 실질적인 위치(index) 값을 찾아 반환한다
+  const idx = todoList.value.findIndex((todo) => todo.id === id);
+  todoList.value[idx].done = !todoList.value[idx].done;
+}
+const deleteTodo = (id) => {
+  // id 기반으로 배열의 실질적인 위치(index) 값을 찾아 반환한다
+  const idx = todoList.value.findIndex((todo) => todo.id === id);
+  todoList.value.splice(idx, 1);
+}
 
 onMounted(() => {
   const data = getTodoList();
@@ -24,8 +44,9 @@ onMounted(() => {
   <h3>A05 TodoList</h3>
 
   <div class="mb-5">
-    <A05TodoForm></A05TodoForm>
-    <A05TodoTable :todoList="todoList"></A05TodoTable>
+    <A05TodoForm :addTodo="addTodo"></A05TodoForm>
+    <A05TodoTable 
+      :todoList="todoList" :updateTodo="updateTodo" :deleteTodo="deleteTodo"></A05TodoTable>
   </div>
 </template>
 

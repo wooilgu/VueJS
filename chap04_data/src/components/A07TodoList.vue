@@ -1,5 +1,6 @@
+
 <script setup>
-import { ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import A07TodoForm from './children/A07TodoForm.vue'
 import A07TodoTable from './children/A07TodoTable.vue'
 
@@ -8,6 +9,8 @@ const todoList = ref([
   { id: 2, text: '두 번째 할 일', done: false },
   { id: 3, text: '세 번째 할 일', done: false },
 ]);
+const text = ref('A');
+const changeText = (str) => text.value = str;
 
 const addTodo = (text) => {
   const cnt = todoList.value.length > 0 ? todoList.value.at(-1).id + 1 : 1;
@@ -15,6 +18,7 @@ const addTodo = (text) => {
   todoList.value.push(todo);
 };
 const updateTodo = (id) => {
+  // find => 매칭되는 값 자체를 가져온다
   const todo = todoList.value.find(todo => todo.id === id);
   todo.done = !todo.done;
 }
@@ -22,6 +26,12 @@ const deleteTodo = (id) => {
   const index = todoList.value.findIndex(todo => todo.id === id);
   todoList.value.splice(index, 1);
 }
+
+provide('useTodo', {
+  todoList: computed( () => todoList.value ),
+  text: computed( () => text.value ),
+  addTodo, updateTodo, deleteTodo, changeText
+})
 </script>
 
 <template>

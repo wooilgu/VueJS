@@ -1,5 +1,11 @@
+
 <script setup>
-  
+import { inject } from 'vue';
+import A07TodoItem from './A07TodoItem.vue'
+
+// const useTodo = inject('useTodo');
+// 디스트럭처링 const { todoList } = { todoList: [], text: 'A', update };
+const { todoList } = inject('useTodo');
 </script>
 
 <template>
@@ -13,12 +19,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td><span></span></td>
-        <td><button class="btn btn-primary">Complete</button></td>
-        <td><button class="btn btn-danger">Delete</button></td>
-      </tr>
+      <!-- <template v-for="todo in useTodo.todoList.value" :key="todo.id"> -->
+      <template v-for="todo in todoList" :key="todo.id">
+        <A07TodoItem :todo="todo" />
+      </template>
     </tbody>
   </table>
 </template>

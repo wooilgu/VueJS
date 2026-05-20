@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { computed, provide, reactive, ref } from 'vue';
 import A06Inject from './children/A06Inject.vue';
 
 const name = ref('NolBu');
@@ -12,6 +12,19 @@ const changeUser = () => {
   user.name = '놀부';
   user.age = 300;
 };
+
+// 자식 요소 deep 상관없이 어디서든지 공유할 수 있도록 정의
+// ref 변수는 computed로 감싼다 => 상태변수로 변경되서 전달됨
+provide('useData', {
+  name: computed(() => name.value),
+  age: computed(() => age.value),
+  user: computed(() => user)  ,
+  changeName,
+  // method => 변경되지 않음, 참조하기 쉽게 객체로 묶어 사용도 가능하다.
+  action : { changeAge, changeUser }
+});
+
+
 </script>
 
 <template>

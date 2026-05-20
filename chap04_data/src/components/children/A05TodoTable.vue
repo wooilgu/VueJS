@@ -1,6 +1,8 @@
 
 <script setup>
-  defineProps(['todoList'])
+import A05TodoItem from './A05TodoItem.vue'
+
+defineProps(['todoList', 'updateTodo', 'deleteTodo'])
 </script>
 
 <template>
@@ -14,7 +16,10 @@
       </tr>
     </thead>
     <tbody>
-      
+      <template v-for="todo in todoList" :key="todo.id">
+        <!-- tr 하나 생성마다 사용할 값(todo)를 전달 -->
+        <A05TodoItem :todo="todo" :updateTodo="updateTodo" :deleteTodo="deleteTodo"></A05TodoItem>
+      </template>
     </tbody>
   </table>
 </template>
