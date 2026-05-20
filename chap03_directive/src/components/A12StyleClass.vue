@@ -1,12 +1,35 @@
+
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const str = 'Good Morning!!!';
 const check = ref(true);
 const num = ref(0);
 
 const styleOne = { color: 'orange', fontSize: '24pt', fontWeight: 'bold' };
+const styleTwo = ref({ color: 'orange', fontSize: '24pt', fontWeight: 'bold' });
+
 const classOne = 'one two three';
+const classTwo = ref('one two three');
+
+const enterEvent = () => {
+  styleTwo.value = { ...styleTwo.value, backgroundColor: 'lightgray', color: 'white' }
+}
+const leaveEvent = () => {
+  styleTwo.value = { color: 'orange', fontSize: '24pt', fontWeight: 'bold' }
+}
+const enterCSSEvent = () => {
+  classTwo.value = 'one two'
+}
+const leaveCSSEvent = () => {
+  classTwo.value = 'one two three'
+}
+
+const checkNum = computed(() => {
+  if(num.value >100 || num.value < 0 ) return { warning: true }
+  else return { warning: false } 
+});
+
 </script>
 
 <template>
@@ -15,21 +38,22 @@ const classOne = 'one two three';
   <div class="mb-3">
     <h5>Style Binding</h5>
     <div style="color: orange; font-size: 24pt; font-weight: bold;">{{str}}</div>
-    <div>{{str}}</div>
-    <div>{{str}}</div>
-    <div>{{str}}</div>
+    <div v-bind:style="{color: 'orange', fontSize: '24pt', fontWeight: 'bold'}">{{str}}</div>
+    <div v-bind:style="styleOne">{{str}}</div>
+    <div :style="styleTwo" @mouseenter="enterEvent" @mouseleave="leaveEvent">{{str}}</div>
   </div>
 
   <div class="mb-3">
     <h5>Class Binding</h5>
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
+    <div class="one two three">{{str}}</div>
+    <div class="one" v-bind:class="'two three'">{{str}}</div>
+    <div v-bind:class="classOne">{{str}}</div>
+    <div :class="classTwo" @mouseenter="enterCSSEvent" @mouseleave="leaveCSSEvent">{{str}}</div>
     <br />
 
-    <div class="one">{{str}}</div>
-    <div class="one">{{str}}</div>
+    <!-- key는 class 이름(문자열)이다 -->
+    <div :class="{ one: true, two: true, three: check }">{{str}}</div>
+    <div :class="{ [classOne]: check }">{{str}}</div>
 
     <div>
       <input type="checkbox" class="form-check-input" id="check" v-model="check" />{{ ' ' }}
@@ -38,7 +62,8 @@ const classOne = 'one two three';
   </div>
 
   <div class="mb-5">
-    <input type="number" class="form-control" v-model="num" />
+    <!-- <input type="number" class="form-control" v-model="num" :class="{ warning:true }" /> -->
+  <input type="number" class="form-control" v-model="num" :class="checkNum" />
   </div>
 </template>
 

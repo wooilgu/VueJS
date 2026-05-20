@@ -1,7 +1,25 @@
+
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+// DOM 요소 참조: 참조할 요소에 ref="elem" 형태로 연결한다
+const elem = ref(null);
+const btnElem = ref(null);
 
 const message = ref('Good Morning');
+const changeMessage = () => {
+  // const inputElem = document.querySelector('input[name="message"]');
+  // message.value = inputElem.value.trim();
+
+  message.value = (elem.value).value.trim();
+}
+
+// setup은 아직 template을 읽기 전
+// btnElem.value.style.color = 'black'      // Error
+onMounted(() => {
+  (btnElem.value).style.color = 'black';
+  btnElem.value.style.fontWeight = 'bold';
+})
 </script>
 
 <template>
@@ -9,8 +27,9 @@ const message = ref('Good Morning');
 
   <form class="mb-3">
     <div class="input-group">
-      <input type="text" class="form-control" name="message">
-      <button type="submit" class="btn btn-danger">ADD</button>
+      <input type="text" class="form-control" name="message" ref="elem">
+      <button type="submit" class="btn btn-danger" ref="btnElem" 
+        @click.prevent="changeMessage">ADD</button>
     </div>
   </form>
 

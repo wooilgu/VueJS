@@ -7,15 +7,16 @@ const data = reactive({
   num: 0,
   address: '',
   text: '',
-  gender: '',
+  gender: 'FIMALE',
   checkOne: true,   // checkbox도 체크가 되어 있는 상태
   checkTwo: '동의',
-  fruit: [],
+  fruit: ['BANANA'],
   country: '',
-  fourTeam: [],
+  fourTeam: ['한화', '엘지'],
   person: {},
   comment: '',
 });
+
 // 조작할 변수가 아님 => 일반 변수
 const countries = ['대한민국', '미국', '프랑스', '스페인', '독일', '필리핀', '포르투칼'];
 const teams = ['한화', '롯데', 'NC', '기아', '삼성', '두산', '엘지', '넥센', 'SSG'];
@@ -146,21 +147,24 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       Comment: {{ data.comment }}
       <label for="comment" class="form-label"></label>
-      <textarea class="form-control" id="comment" rows="3"></textarea>
+      <textarea class="form-control" id="comment" rows="3" v-model="data.comment"></textarea>
     </div>
 
     <div class="mb-3">
       Radio Button Object Value: {{ data.person }} / {{ data.person.name }}
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="person" id="person1">
+        <input class="form-check-input" type="radio" name="person" id="person1"
+          v-bind:value="{name: '놀부', age: 30}" v-model="data.person">
         <label class="form-check-label" for="person1">놀부</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="person" id="person2">
+        <input class="form-check-input" type="radio" name="person" id="person2"
+          :value="{name: '흥부', age: 31}" v-model="data.person">
         <label class="form-check-label" for="person2">흥부</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="person" id="person3">
+        <input class="form-check-input" type="radio" name="person" id="person3"
+          :value="{name: '방자', age: 32}" v-model="data.person">
         <label class="form-check-label" for="person3">방자</label>
       </div>
     </div>
