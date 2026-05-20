@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref } from 'vue';
+import { onUnmounted, ref, watch } from 'vue';
 
 const num = ref(10);
 const name = ref('NolBu');
@@ -29,6 +29,19 @@ const sendObject = () => {
     changeUser,
   });
 }
+
+// 부모에서 값을 변경 => 자식 요소의 상태 변경 => 자식 화면만 갱신
+// 부모의 값은 항상 이벤트로 전달되는데 값 변경 후 다시 이벤트를 발생 안함 => 부모 변경 안됨
+const numWatch = watch( num, () => sendNumber())
+const objWatch = watch( 
+  () => [num.value, name.value, user.value.name], 
+  () => sendObject()
+);
+
+onUnmounted(() => {
+  numWatch();
+  objWatch();
+})
 
 </script>
 

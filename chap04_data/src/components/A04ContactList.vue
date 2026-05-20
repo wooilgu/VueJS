@@ -1,48 +1,55 @@
-<script setup>
-import A04ContactForm from './children/A04ContactForm.vue';
-import A04ContactTable from './children/A04ContactTable.vue';
 
-// const baseURL = 'https://sample.bmaster.kro.kr';
-const baseURL = 'http://localhost:8000';
+<script setup>
+  // const props = defineProps(['contactList'])
+  defineProps({
+    'contactList': { type: Array, default: () => [] },
+  })
 </script>
 
 <template>
-  <h3>A04 ContactList</h3>
-
-  <div class="mb-5">
-    <A04ContactForm></A04ContactForm>
-    <A04ContactTable></A04ContactTable>
-  </div>
+  <table class="table mb-5">
+    <thead>
+      <tr>
+        <th>번호</th><th>이름</th><th>전화번호</th><th>주소</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="contact in contactList" :key="contact.no">
+        <td>{{ contact.no }}</td>
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.tel }}</td>
+        <td>{{ contact.address }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <!-- 
 <script>
-import A05ContactForm from './childcomps/A05ContactForm.vue'
-import A05ContactList from './childcomps/A05ContactList.vue'
-
-const baseURL = 'http://sample.bmaster.kro.kr/contacts_long/search/'
-
 export default {
-  components: {A05ContactForm, A05ContactList},
-  data() {
-    return {
-      searchData: [],
-      isLoading: false,
-    }
-  },
-  methods: {
-    getSearch(evt) {
-      this.isLoading = true;
-
-      fetch(baseURL + evt)
-        .then(resp => resp.json())
-        .then(data => {
-          this.searchData = data;
-          this.isLoading = false;
-        })
-        .catch(err => console.error(err))
-    }
-  }
+  props: ['contactList'],
 }
 </script>
+
+<template>
+  <table class="table mb-5">
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>주소</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="contact in contactList" :key="contact.no">
+        <td>{{ contact.no }}</td>
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.tel }}</td>
+        <td>{{ contact.address }}</td>
+      </tr>
+    </tbody>
+  </table>
+</template>
 -->
+

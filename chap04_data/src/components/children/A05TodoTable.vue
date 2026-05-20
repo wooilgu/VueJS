@@ -1,4 +1,7 @@
-<script setup></script>
+
+<script setup>
+  defineProps(['todoList'])
+</script>
 
 <template>
   <table class="table">
@@ -11,23 +14,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td>
-          <span></span>
-        </td>
-        <td><button class="btn btn-primary">Complete</button></td>
-        <td><button class="btn btn-danger">Delete</button></td>
-      </tr>
+      
     </tbody>
   </table>
 </template>
-
-<style scoped>
-.done {
-  text-decoration: line-through;
-}
-</style>
 
 <!--
 <script>
@@ -57,3 +47,4 @@ export default {
   </table>
 </template>
 -->
+
