@@ -1,6 +1,13 @@
-
 <script setup>
-import { onBeforeMount, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, ref } from 'vue';
+import {
+  onBeforeMount,
+  onBeforeUnmount,
+  onBeforeUpdate,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+  ref,
+} from 'vue';
 
 const baseURL = 'http://localhost:8000/contacts_long/search/';
 const num = ref(0);
@@ -10,20 +17,19 @@ const decrease = () => num.value--;
 const contactList = ref([]);
 const isLoading = ref(false);
 
-const getContactList = search => {
+const getContactList = (search) => {
   isLoading.value = true;
 
   fetch(baseURL + search)
-    .then(resp => resp.json())
-    .then(data => (contactList.value = data))
-    .catch(error => console.error(error))
+    .then((resp) => resp.json())
+    .then((data) => (contactList.value = data))
+    .catch((error) => console.error(error))
     .finally(() => (isLoading.value = false));
 };
 
-// 컴포넌트가 특정한 시점(화면표시, 화면에서 삭제 등)에 호출될 함수를 
+// 컴포넌트가 특정한 시점(화면표시, 화면에서 삭제 등)에 호출될 함수를
 // 특정한 이름으로 정의해 놓음 => 시점이되면 자동으로 호출되서 실행됨. 이를 라이프사이클 메서드라고 한다
 // data, event 초기화(beforeCreate, created) => setUp이 담당
-
 
 // + 버튼 배경색을 오렌지로 변경
 // template를 읽기 전 상태. 따라서 DOM 요소를 참조할 수 없다.
@@ -47,7 +53,7 @@ onBeforeUpdate(() => {
   console.log('onBeforeUpdate');
 });
 // updated => 상태 변경 후
-// 여기서 contactList/isLoading/num 같은 상태 변경하면 무한 업데이트 
+// 여기서 contactList/isLoading/num 같은 상태 변경하면 무한 업데이트
 onUpdated(() => {
   console.log('onUpdated');
 });
@@ -66,14 +72,14 @@ onUnmounted(() => {
   console.log('unMounted');
 });
 
-console.log('setup이 모두 실행됨.....')
+console.log('setup이 모두 실행됨.....');
 </script>
 
 <template>
   <h3>A08 LifeCycle</h3>
-  
+
   <div class="mb-3">
-    Num: {{num}}<br>
+    Num: {{ num }}<br />
     <button v-on:click="increase()" id="plus">+1</button>
     <button v-on:click="decrease()" id="minus">-1</button>
   </div>

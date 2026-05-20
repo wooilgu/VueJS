@@ -1,4 +1,3 @@
-
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import { isRef, ref } from 'vue';
@@ -15,25 +14,25 @@ const name = ref('Adam');
 const age = ref(20);
 const check = ref(true);
 const arr = ref([10, 11]);
-const user = ref({ name: '홍길동', age: 30});
+const user = ref({ name: '홍길동', age: 30 });
 
-const onAdd = (x=0, y=0) => `${x} + ${y} = ${x + y}`;
+const onAdd = (x = 0, y = 0) => `${x} + ${y} = ${x + y}`;
 
 // 상태 변수 변경
 // console.log(name);
-const changeName = (x) => name.value = x;
-const changeAge = (x) => age.value = x;
-const changeCheck = () => check.value = !check.value;
+const changeName = (x) => (name.value = x);
+const changeAge = (x) => (age.value = x);
+const changeCheck = () => (check.value = !check.value);
 
 const addArray = () => {
-  const random = Math.ceil(Math.random() * 100);    // 1 ~ 100
+  const random = Math.ceil(Math.random() * 100); // 1 ~ 100
   arr.value.push(random);
-}
-const updateArray = (idx, value) => arr.value[idx] = value;
+};
+const updateArray = (idx, value) => (arr.value[idx] = value);
 const deleteArray = (idx) => arr.value.splice(idx, 1);
 
-const addUser = (key, value) => user.value[key] = value;
-const updateUser = (key, value) => user.value[key] = value;
+const addUser = (key, value) => (user.value[key] = value);
+const updateUser = (key, value) => (user.value[key] = value);
 const deleteUser = (key) => delete user.value[key];
 
 /*
@@ -57,12 +56,10 @@ console.log(isRef(numRef));         // true
   <h3>A01 상태변수 - Ref</h3>
 
   <div class="mb-3">
-    <div class="mb-2">
-      Count: {{ count }}
-    </div>
+    <div class="mb-2">Count: {{ count }}</div>
 
     <p>
-      변수의 값이 undefined, null 인 경우는 화면에 아무것도 표시하지 않는다. <br>
+      변수의 값이 undefined, null 인 경우는 화면에 아무것도 표시하지 않는다. <br />
       Name: {{ name }}<br />
       Age: {{ age }} <br />
       Check: {{ check ? '동의' : '동의 안함' }} <br />
@@ -89,8 +86,7 @@ console.log(isRef(numRef));         // true
 </template>
 
 <style scoped>
-  [v-cloak] {
-    display: none;
-  }
+[v-cloak] {
+  display: none;
+}
 </style>
-

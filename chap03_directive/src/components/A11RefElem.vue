@@ -1,4 +1,3 @@
-
 <script setup>
 import { onMounted, ref } from 'vue';
 
@@ -11,15 +10,15 @@ const changeMessage = () => {
   // const inputElem = document.querySelector('input[name="message"]');
   // message.value = inputElem.value.trim();
 
-  message.value = (elem.value).value.trim();
-}
+  message.value = elem.value.value.trim();
+};
 
 // setup은 아직 template을 읽기 전
 // btnElem.value.style.color = 'black'      // Error
 onMounted(() => {
-  (btnElem.value).style.color = 'black';
+  btnElem.value.style.color = 'black';
   btnElem.value.style.fontWeight = 'bold';
-})
+});
 </script>
 
 <template>
@@ -27,15 +26,14 @@ onMounted(() => {
 
   <form class="mb-3">
     <div class="input-group">
-      <input type="text" class="form-control" name="message" ref="elem">
-      <button type="submit" class="btn btn-danger" ref="btnElem" 
-        @click.prevent="changeMessage">ADD</button>
+      <input type="text" class="form-control" name="message" ref="elem" />
+      <button type="submit" class="btn btn-danger" ref="btnElem" @click.prevent="changeMessage">
+        ADD
+      </button>
     </div>
   </form>
 
-  <div class="mb-5">
-    Message: {{message}}
-  </div>  
+  <div class="mb-5">Message: {{ message }}</div>
 </template>
 
 <!--

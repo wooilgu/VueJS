@@ -1,4 +1,3 @@
-
 <script setup>
 import { reactive } from 'vue';
 
@@ -8,7 +7,7 @@ const data = reactive({
   address: '',
   text: '',
   gender: 'FIMALE',
-  checkOne: true,   // checkbox도 체크가 되어 있는 상태
+  checkOne: true, // checkbox도 체크가 되어 있는 상태
   checkTwo: '동의',
   fruit: ['BANANA'],
   country: '',
@@ -31,15 +30,15 @@ const sendData = () => {
   // Server => Client (JSON => JavaScript 객체로 변경)
   const jsData = JSON.parse(jsonData);
   console.log(jsData);
-}
+};
 
 const changeText = (evt, num) => {
   const value = evt.target.value.trim();
-  if(value.length > num) evt.target.value = value.trim().slice(0, num);
+  if (value.length > num) evt.target.value = value.trim().slice(0, num);
   else data.text = value;
-}
+};
 </script>
-  
+
 <template>
   <h3>A10 v-model</h3>
 
@@ -51,13 +50,13 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       <label for="field1">Trim: {{ data.name }} / {{ data.name.length }}</label>
       <!-- v-model.trim => 입력된 값의 좌우 공백을 제거한 값을 반환한다 -->
-      <input type="text" class="form-control" id="field1" v-model.trim="data.name">
+      <input type="text" class="form-control" id="field1" v-model.trim="data.name" />
     </div>
 
     <div class="mb-3">
       <label for="field2">Number: {{ data.num + 1 }}</label>
       <!-- v-model.number => 입력된 값을 숫자 타입으로 변환 한 값을 반환한다 -->
-      <input type="number" class="form-control" id="field2" v-model.number="data.num">
+      <input type="number" class="form-control" id="field2" v-model.number="data.num" />
     </div>
 
     <div class="mb-3">
@@ -65,7 +64,7 @@ const changeText = (evt, num) => {
       <!-- v-model.lazy => 포커스(마우스 포인트)가 필드에서 벗어나는 순간 바인딩이 이루어진다
         이외의 효과는 개발자가 v-model을 이용해 정의 할 수 있다 
       -->
-      <input type="text" class="form-control" id="field3" v-model.lazy="data.address">
+      <input type="text" class="form-control" id="field3" v-model.lazy="data.address" />
     </div>
 
     <div class="mb-3">
@@ -76,22 +75,48 @@ const changeText = (evt, num) => {
         @input="changeText" => 이벤트 핸들러로 v-bind의 value을 수정 (가드 추가 가능)
         => 상태 변경 => 화면 갱신 (결국 v-model과 동일한 효과를 얻을 수 있다 - React 방식)
       -->
-      <input type="text" class="form-control" id="field4" 
-        v-bind:value="data.text" @input="(evt) => changeText(evt, 10)">
+      <input
+        type="text"
+        class="form-control"
+        id="field4"
+        v-bind:value="data.text"
+        @input="(evt) => changeText(evt, 10)"
+      />
     </div>
 
     <div class="mb-3">
       Radio Button: {{ data.gender }}
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="gender" id="gender1" value="MALE" v-model="data.gender">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="gender"
+          id="gender1"
+          value="MALE"
+          v-model="data.gender"
+        />
         <label class="form-check-label" for="gender1">남성</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="gender" id="gender2" value="FIMALE" v-model="data.gender">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="gender"
+          id="gender2"
+          value="FIMALE"
+          v-model="data.gender"
+        />
         <label class="form-check-label" for="gender2">여성</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="gender" id="gender3" value="CHILD" v-model="data.gender">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="gender"
+          id="gender3"
+          value="CHILD"
+          v-model="data.gender"
+        />
         <label class="form-check-label" for="gender3">어린이</label>
       </div>
     </div>
@@ -99,7 +124,7 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       Single Check: {{ data.checkOne }} / {{ data.checkOne ? '동의' : '동의 안함' }}
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="checkOne" v-model="data.checkOne">
+        <input class="form-check-input" type="checkbox" id="checkOne" v-model="data.checkOne" />
         <label class="form-check-label" for="checkOne">동의</label>
       </div>
     </div>
@@ -107,8 +132,14 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       Single Check: {{ data.checkTwo }}
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="checkTwo" v-model="data.checkTwo"
-          true-value="동의" false-value="동의 안함">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="checkTwo"
+          v-model="data.checkTwo"
+          true-value="동의"
+          false-value="동의 안함"
+        />
         <label class="form-check-label" for="checkTwo">동의</label>
       </div>
     </div>
@@ -116,15 +147,33 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       CheckBox: {{ data.fruit }}
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fruit1" value="APPLE" v-model="data.fruit">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="fruit1"
+          value="APPLE"
+          v-model="data.fruit"
+        />
         <label class="form-check-label" for="fruit1">사과</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fruit2" value="BANANA" v-model="data.fruit">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="fruit2"
+          value="BANANA"
+          v-model="data.fruit"
+        />
         <label class="form-check-label" for="fruit2">바나나</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="fruit3" value="MELON" v-model="data.fruit">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="fruit3"
+          value="MELON"
+          v-model="data.fruit"
+        />
         <label class="form-check-label" for="fruit3">멜론</label>
       </div>
     </div>
@@ -153,18 +202,36 @@ const changeText = (evt, num) => {
     <div class="mb-3">
       Radio Button Object Value: {{ data.person }} / {{ data.person.name }}
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="person" id="person1"
-          v-bind:value="{name: '놀부', age: 30}" v-model="data.person">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="person"
+          id="person1"
+          v-bind:value="{ name: '놀부', age: 30 }"
+          v-model="data.person"
+        />
         <label class="form-check-label" for="person1">놀부</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="person" id="person2"
-          :value="{name: '흥부', age: 31}" v-model="data.person">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="person"
+          id="person2"
+          :value="{ name: '흥부', age: 31 }"
+          v-model="data.person"
+        />
         <label class="form-check-label" for="person2">흥부</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="person" id="person3"
-          :value="{name: '방자', age: 32}" v-model="data.person">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="person"
+          id="person3"
+          :value="{ name: '방자', age: 32 }"
+          v-model="data.person"
+        />
         <label class="form-check-label" for="person3">방자</label>
       </div>
     </div>
@@ -172,8 +239,6 @@ const changeText = (evt, num) => {
     <button type="submit" @click.prevent="sendData">SEND</button>
   </form>
 </template>
-  
-
 
 <!--
 <script>

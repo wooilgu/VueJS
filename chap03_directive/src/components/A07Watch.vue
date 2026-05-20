@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref, watch } from 'vue';
 
@@ -11,7 +10,7 @@ const loading = ref(false);
 const isError = ref(null);
 
 const watchName = watch(name, (newVal) => {
-  if(newVal.trim().length >= 2) {
+  if (newVal.trim().length >= 2) {
     // console.log('ajax 요청');
     getContactList(newVal);
   }
@@ -34,15 +33,14 @@ const getContactList = (value) => {
       isError.value = err;
     })
     .finally(() => {
-      console.log('성공/실패 상관없이 실행됨...')
+      console.log('성공/실패 상관없이 실행됨...');
       loading.value = false;
-    })
-}
-
+    });
+};
 
 const stopWatch = () => {
   watchName();
-}
+};
 </script>
 
 <template>
@@ -52,10 +50,15 @@ const stopWatch = () => {
     <h3>점검중...</h3>
   </div>
   <div class="mb-5" v-else>
-    <input type="text" class="form-control" v-model="name"><br>
+    <input type="text" class="form-control" v-model="name" /><br />
     <table class="table">
       <thead>
-        <tr><th>NO</th><th>NAME</th><th>TEL</th><th>ADDRESS</th></tr>
+        <tr>
+          <th>NO</th>
+          <th>NAME</th>
+          <th>TEL</th>
+          <th>ADDRESS</th>
+        </tr>
       </thead>
       <tbody>
         <tr v-for="item in contactList" :key="item.no">
@@ -68,7 +71,7 @@ const stopWatch = () => {
     </table>
 
     <div v-show="loading">Loading....</div>
-  </div>  
+  </div>
 
   <div class="mb-5">
     <button class="btn btn-outline-primary btn-sm" @click="stopWatch()">STOP</button>

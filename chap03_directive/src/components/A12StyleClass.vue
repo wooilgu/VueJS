@@ -1,6 +1,5 @@
-
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref } from 'vue';
 
 const str = 'Good Morning!!!';
 const check = ref(true);
@@ -13,47 +12,46 @@ const classOne = 'one two three';
 const classTwo = ref('one two three');
 
 const enterEvent = () => {
-  styleTwo.value = { ...styleTwo.value, backgroundColor: 'lightgray', color: 'white' }
-}
+  styleTwo.value = { ...styleTwo.value, backgroundColor: 'lightgray', color: 'white' };
+};
 const leaveEvent = () => {
-  styleTwo.value = { color: 'orange', fontSize: '24pt', fontWeight: 'bold' }
-}
+  styleTwo.value = { color: 'orange', fontSize: '24pt', fontWeight: 'bold' };
+};
 const enterCSSEvent = () => {
-  classTwo.value = 'one two'
-}
+  classTwo.value = 'one two';
+};
 const leaveCSSEvent = () => {
-  classTwo.value = 'one two three'
-}
+  classTwo.value = 'one two three';
+};
 
 const checkNum = computed(() => {
-  if(num.value >100 || num.value < 0 ) return { warning: true }
-  else return { warning: false } 
+  if (num.value > 100 || num.value < 0) return { warning: true };
+  else return { warning: false };
 });
-
 </script>
 
 <template>
   <h3>A12 Style & Class</h3>
-    
+
   <div class="mb-3">
     <h5>Style Binding</h5>
-    <div style="color: orange; font-size: 24pt; font-weight: bold;">{{str}}</div>
-    <div v-bind:style="{color: 'orange', fontSize: '24pt', fontWeight: 'bold'}">{{str}}</div>
-    <div v-bind:style="styleOne">{{str}}</div>
-    <div :style="styleTwo" @mouseenter="enterEvent" @mouseleave="leaveEvent">{{str}}</div>
+    <div style="color: orange; font-size: 24pt; font-weight: bold">{{ str }}</div>
+    <div v-bind:style="{ color: 'orange', fontSize: '24pt', fontWeight: 'bold' }">{{ str }}</div>
+    <div v-bind:style="styleOne">{{ str }}</div>
+    <div :style="styleTwo" @mouseenter="enterEvent" @mouseleave="leaveEvent">{{ str }}</div>
   </div>
 
   <div class="mb-3">
     <h5>Class Binding</h5>
-    <div class="one two three">{{str}}</div>
-    <div class="one" v-bind:class="'two three'">{{str}}</div>
-    <div v-bind:class="classOne">{{str}}</div>
-    <div :class="classTwo" @mouseenter="enterCSSEvent" @mouseleave="leaveCSSEvent">{{str}}</div>
+    <div class="one two three">{{ str }}</div>
+    <div class="one" v-bind:class="'two three'">{{ str }}</div>
+    <div v-bind:class="classOne">{{ str }}</div>
+    <div :class="classTwo" @mouseenter="enterCSSEvent" @mouseleave="leaveCSSEvent">{{ str }}</div>
     <br />
 
     <!-- key는 class 이름(문자열)이다 -->
-    <div :class="{ one: true, two: true, three: check }">{{str}}</div>
-    <div :class="{ [classOne]: check }">{{str}}</div>
+    <div :class="{ one: true, two: true, three: check }">{{ str }}</div>
+    <div :class="{ [classOne]: check }">{{ str }}</div>
 
     <div>
       <input type="checkbox" class="form-check-input" id="check" v-model="check" />{{ ' ' }}
@@ -63,7 +61,7 @@ const checkNum = computed(() => {
 
   <div class="mb-5">
     <!-- <input type="number" class="form-control" v-model="num" :class="{ warning:true }" /> -->
-  <input type="number" class="form-control" v-model="num" :class="checkNum" />
+    <input type="number" class="form-control" v-model="num" :class="checkNum" />
   </div>
 </template>
 
@@ -73,10 +71,19 @@ style scoped => 현재 컴포넌트만 적용 가능하도록 속성을 추가�
 style module => 현재 컴포넌트만 적용. class 이름을 변경. 변경된 이름은 this.$style이 관리
 -->
 <style scoped>
-  .one { color: orange; }
-  .two { font-size: 24pt; }
-  .three { font-weight: bold; }
-  .warning {background-color: orange; color: gray; }
+.one {
+  color: orange;
+}
+.two {
+  font-size: 24pt;
+}
+.three {
+  font-weight: bold;
+}
+.warning {
+  background-color: orange;
+  color: gray;
+}
 </style>
 
 <!--

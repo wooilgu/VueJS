@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref, useCssModule } from 'vue';
 
@@ -16,14 +15,16 @@ const classAll = `${style.one} ${style.two} ${style.three}`;
   <h3>A13 Class Module</h3>
 
   <div class="mb-3">
-    <div :class="style.one">{{hello}}</div>
-    <div :class="[style.one, style.two, style.three]">{{hello}}</div>
-    <div :class="classAll">{{hello}}</div>
+    <div :class="style.one">{{ hello }}</div>
+    <div :class="[style.one, style.two, style.three]">{{ hello }}</div>
+    <div :class="classAll">{{ hello }}</div>
   </div>
 
   <div class="mb-5">
-    <div :class="{ [style.one]: true, [style.two]: true, [style.three]: isChecked }">{{hello}}</div>
-    <div :class="{ [classAll]: isChecked }">{{hello}}</div>
+    <div :class="{ [style.one]: true, [style.two]: true, [style.three]: isChecked }">
+      {{ hello }}
+    </div>
+    <div :class="{ [classAll]: isChecked }">{{ hello }}</div>
     <div>
       <input type="checkbox" class="form-check-input" id="isChecked" v-model="isChecked" />{{ ' ' }}
       <label class="form-check-label" for="isChecked">CHECK</label>
@@ -32,9 +33,15 @@ const classAll = `${style.one} ${style.two} ${style.three}`;
 </template>
 
 <style module>
-  .one { color: orange; }
-  .two { font-size: 24pt; }
-  .three { font-weight: bold; }
+.one {
+  color: orange;
+}
+.two {
+  font-size: 24pt;
+}
+.three {
+  font-weight: bold;
+}
 </style>
 
 <!--

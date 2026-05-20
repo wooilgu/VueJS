@@ -1,10 +1,9 @@
-
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import { isReactive, isRef, reactive, ref } from 'vue';
 
 const nickname = ref('Adam');
-const changeNickname = (str) => nickname.value = str;
+const changeNickname = (str) => (nickname.value = str);
 
 // reactive는 값을 통째로 교체하지 않는다.
 // reactive도 상태변수. 관련있는 자료를 묶어서 사용하고자 하는 경우
@@ -16,20 +15,20 @@ const state = reactive({
   check: true,
   arr: [10, 11],
   user: { name: '방자', age: 20 },
-})
+});
 
-const changeName = (str) => state.name = str;
-const changeAge = (num) => state.age = num;
-const changeCheck = () => state.check = !state.check;
+const changeName = (str) => (state.name = str);
+const changeAge = (num) => (state.age = num);
+const changeCheck = () => (state.check = !state.check);
 const addArray = () => {
   const random = Math.ceil(Math.random() * 100);
   state.arr.push(random);
-}
-const updateArray = (idx, value) => state.arr[idx] = value;
+};
+const updateArray = (idx, value) => (state.arr[idx] = value);
 const deleteArray = (idx) => state.arr.splice(idx, 1);
 
-const addObject = (key, value) => state.user[key] = value;
-const updateObject = (key, value) => state.user[key] = value;
+const addObject = (key, value) => (state.user[key] = value);
+const updateObject = (key, value) => (state.user[key] = value);
 const deleteObject = (key) => delete state.user[key];
 
 /*
@@ -42,8 +41,7 @@ console.log(name, typeof name, isRef(name), isReactive(name));
 */
 
 const message = ref('<b>Good Morning</b>');
-const changeMessage = (str) => message.value = `<b><i>${str}</i></b>`;
-
+const changeMessage = (str) => (message.value = `<b><i>${str}</i></b>`);
 </script>
 
 <template>
@@ -76,21 +74,21 @@ const changeMessage = (str) => message.value = `<b><i>${str}</i></b>`;
 
   <div class="mb-3">
     <h5>2. 바인딩 연산</h5>
-    일반적 연산: {{ 10 + 20 }}<br>
-    속성 참조: {{ state.arr.length }} <br>
-    속성 참조 연산: {{ state.arr.length * 100 }}<br>
-    비교 연산: {{ state.arr[0] > 0 }}<br>
-    비교 연산: {{ state.arr[0] && state.arr[1] > 0 }}<br>
-    삼항 연산: {{ state.name === 'Adam' ? '관리자' : '일반 유저' }} <br>
+    일반적 연산: {{ 10 + 20 }}<br />
+    속성 참조: {{ state.arr.length }} <br />
+    속성 참조 연산: {{ state.arr.length * 100 }}<br />
+    비교 연산: {{ state.arr[0] > 0 }}<br />
+    비교 연산: {{ state.arr[0] && state.arr[1] > 0 }}<br />
+    삼항 연산: {{ state.name === 'Adam' ? '관리자' : '일반 유저' }} <br />
     Value: {{ 10 }} / {{ '10' }} / {{ true }} / {{ 'true' }}
   </div>
 
   <div class="mb-3">
     <h5>3. 바인딩 관련 지시자</h5>
-    보간법: {{ message }}<br>
-    v-text: <span v-text="message"></span><br>
+    보간법: {{ message }}<br />
+    v-text: <span v-text="message"></span><br />
     <!-- v-html은 XSS 이슈 때문에 "신뢰된 문자열"에서만 사용 -->
-    v-html: <span v-html="message"></span><br>
+    v-html: <span v-html="message"></span><br />
   </div>
 
   <div class="mb-3">
@@ -98,9 +96,11 @@ const changeMessage = (str) => message.value = `<b><i>${str}</i></b>`;
       {{ 를 바인딩의 표현식으로 사용. 따라서 {{  }}를 표현할 수 없음
       v-pre는 {{   }}를 텍스트로 표시 
     -->
-    v-pre: <span v-pre>{{ message }}</span><br>
+    v-pre: <span v-pre>{{ message }}</span
+    ><br />
     <!-- v-once는 바인딩 후 상태변수의 값이 변경되도 값 변경을 하지 않는다. 최초 1번만 값 대입 -->
-    v-once: <span v-once>{{ message }}</span><br>
+    v-once: <span v-once>{{ message }}</span
+    ><br />
   </div>
 
   <div class="mb-5">
