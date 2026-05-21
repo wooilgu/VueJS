@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref } from 'vue';
 
 const kor = ref(80);
 const eng = ref(90);
@@ -9,15 +9,13 @@ const user = reactive({
   address: 'Seoul',
 });
 
-const changeKor = (num) => kor.value = num;
+const changeKor = (num) => (kor.value = num);
 </script>
 
 <template>
   <h5>A10 Scoped Slot</h5>
 
-  <div class="mb-3">
-    자식 컴퍼넌트의 데이터를 부모 컴퍼넌트에서 조작.
-  </div>
+  <div class="mb-3">자식 컴퍼넌트의 데이터를 부모 컴퍼넌트에서 조작.</div>
 
   <div>
     <input type="text" class="form-control" v-model.number="kor" />
@@ -27,11 +25,17 @@ const changeKor = (num) => kor.value = num;
 
   <div class="mb-5">
     <!-- slot props라 한다 -->
-    <slot></slot>
-    <slot name="jumsu"></slot>
+    <slot nick="Default" :kor="kor" :eng="eng" :user="user" :changeKor="changeKor"></slot>
+    <slot
+      name="jumsu"
+      nick="Jumsu"
+      :kor="kor"
+      :eng="eng"
+      :user="user"
+      :changeKor="changeKor"
+    ></slot>
   </div>
 </template>
-
 
 <!-- 
 <script>
@@ -74,4 +78,3 @@ export default {
 </template>
 
 -->
-

@@ -1,15 +1,14 @@
-
 <script setup>
 const props = defineProps(['addTodo']);
 
 const sendData = () => {
   const elem = document.querySelector('input');
-  if(elem.value.trim() !== '') {
+  if (elem.value.trim() !== '') {
     props.addTodo(elem.value.trim());
     elem.value = '';
-    elem.focus();   
+    elem.focus();
   }
-}
+};
 </script>
 
 <template>
@@ -19,7 +18,7 @@ const sendData = () => {
       <div class="input-group-append">
         <button type="submit" class="btn btn-primary mr-1" @click.prevent="sendData">Submit</button>
       </div>
-    </div>  
+    </div>
   </form>
 </template>
 
@@ -55,4 +54,3 @@ export default {
   </form>
 </template>
 -->
-

@@ -1,9 +1,7 @@
-
-
 <script setup>
 import { useCssModule } from 'vue';
 
-defineProps(['todo', 'updateTodo', 'deleteTodo'])
+defineProps(['todo', 'updateTodo', 'deleteTodo']);
 const style = useCssModule();
 </script>
 
@@ -14,7 +12,7 @@ const style = useCssModule();
       <span :class="{ [style.done]: todo.done }">{{ todo.text }}</span>
     </td>
     <td><button class="btn btn-primary" @click="() => updateTodo(todo.id)">Complete</button></td>
-    <td><button class="btn btn-danger"  @click="() => deleteTodo(todo.id)">Delete</button></td>
+    <td><button class="btn btn-danger" @click="() => deleteTodo(todo.id)">Delete</button></td>
   </tr>
 </template>
 

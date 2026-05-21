@@ -18,13 +18,11 @@ const changeUser = () => {
 provide('useData', {
   name: computed(() => name.value),
   age: computed(() => age.value),
-  user: computed(() => user)  ,
+  user: computed(() => user),
   changeName,
   // method => 변경되지 않음, 참조하기 쉽게 객체로 묶어 사용도 가능하다.
-  action : { changeAge, changeUser }
+  action: { changeAge, changeUser },
 });
-
-
 </script>
 
 <template>

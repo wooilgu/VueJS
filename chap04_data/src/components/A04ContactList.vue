@@ -1,16 +1,18 @@
-
 <script setup>
-  // const props = defineProps(['contactList'])
-  defineProps({
-    'contactList': { type: Array, default: () => [] },
-  })
+// const props = defineProps(['contactList'])
+defineProps({
+  contactList: { type: Array, default: () => [] },
+});
 </script>
 
 <template>
   <table class="table mb-5">
     <thead>
       <tr>
-        <th>번호</th><th>이름</th><th>전화번호</th><th>주소</th>
+        <th>번호</th>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>주소</th>
       </tr>
     </thead>
     <tbody>
@@ -52,4 +54,3 @@ export default {
   </table>
 </template>
 -->
-

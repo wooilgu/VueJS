@@ -1,4 +1,3 @@
-
 <script setup>
 import { inject, useCssModule } from 'vue';
 

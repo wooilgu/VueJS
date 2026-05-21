@@ -1,4 +1,3 @@
-
 <script setup>
 import { computed, ref } from 'vue';
 
@@ -17,11 +16,12 @@ const props = defineProps({
   today: { type: String, required: true },
   name: { type: String, default: 'UNKNOWN' },
   age: { type: Number },
-  check: { type: Boolean, default: true },      // 속성을 전달하지 않으면 false. default로 기본값 맞춤
-  isChecked: { type: Boolean, default: true },  // 기본값 true. default로 기본값 맞춤
-  add: { type: String, 
+  check: { type: Boolean, default: true }, // 속성을 전달하지 않으면 false. default로 기본값 맞춤
+  isChecked: { type: Boolean, default: true }, // 기본값 true. default로 기본값 맞춤
+  add: {
+    type: String,
     // val는 전달되는 값 - 넘어오는 값이 없으면 체크 안함
-    validator: (val) => (val.length >= 2) ? true : false
+    validator: (val) => (val.length >= 2 ? true : false),
   },
   // 객체
   arr: {
@@ -32,8 +32,8 @@ const props = defineProps({
     default: () => ['', ''],
     // default 값도 체크 대상이다.
     validator: (val) => {
-      return (val.length >= 2) ? true : false;
-    }
+      return val.length >= 2 ? true : false;
+    },
   },
   user: {
     type: Object,
@@ -42,26 +42,26 @@ const props = defineProps({
     // 객체의 default의 값은 반드시 함수의 반환값 형태로 기술해야 한다.
     // JavaScript에서 객체명.속성명 형태로 값이 있는지 체크할때는 값이
     // 0, -0, '', undefined, null, NaN는 모두 값 없음 취급한다 (false)
-    default: () => ({name: 'A', age: 1}),
+    default: () => ({ name: 'A', age: 1 }),
     // default 값도 체크 대상이다.
     validator: (val) => {
-      return (val.name && val.age) ? true : false;
+      return val.name && val.age ? true : false;
     },
   },
   onAdd: {
     type: Function,
     default: () => '이 함수 자체가 기본값으로 실행된다.',
     // default 값도 체크 대상
-    validator: (val) => (typeof val(2, 3) === 'string') ? true : false,
+    validator: (val) => (typeof val(2, 3) === 'string' ? true : false),
   },
   updateArray: { type: Function, default: () => {} },
   changeUserName: { type: Function, default: () => {} },
-})
+});
 // console.log(props.today)
 const now = computed(() => {
   const now = new Date();
 
-  switch(props.today) {
+  switch (props.today) {
     case 'time':
       return now.toLocaleTimeString();
     case 'date':
@@ -70,14 +70,13 @@ const now = computed(() => {
       return now.toLocaleString();
   }
 });
-
 </script>
 
 <template>
   <h5>A02 Props One Component</h5>
 
   <div class="mb-3">
-    Count: {{ count }} <br>
+    Count: {{ count }} <br />
     <button @click="incCount">+</button>
   </div>
 
@@ -87,17 +86,16 @@ const now = computed(() => {
     Age: {{ age }} <br />
     Check: {{ check }}<br />
     isChecked: {{ isChecked }} <br />
-    Address: {{ add }} <br>
+    Address: {{ add }} <br />
     Array: {{ arr[0] }} / {{ arr[1] }} / {{ arr[2] }}<br />
     User: {{ user.name }} / {{ user.age }} / {{ user.address }} <br />
     onAdd: {{ onAdd(20, 30) }} <br />
-    
   </div>
 
   <div class="mb-5">
-      <button class="btn btn-primary" @click="(evt) => updateArray(1, 3000)">Update Array</button> 
-      <button class="btn btn-danger" @click="(evt) => changeUserName('향단')">User Name</button>
-    </div>
+    <button class="btn btn-primary" @click="(evt) => updateArray(1, 3000)">Update Array</button>
+    <button class="btn btn-danger" @click="(evt) => changeUserName('향단')">User Name</button>
+  </div>
 </template>
 
 <!-- 
@@ -177,4 +175,3 @@ export default {
   </div>
 </template>
 -->
-

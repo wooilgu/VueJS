@@ -1,14 +1,21 @@
-
 <script setup>
 import { computed } from 'vue';
 
 const props = defineProps([
-  'today', 'name', 'age', 'check', 'isChecked', 'add', 'arr', 'user', 'onAdd'
-])
+  'today',
+  'name',
+  'age',
+  'check',
+  'isChecked',
+  'add',
+  'arr',
+  'user',
+  'onAdd',
+]);
 
 const dateOrTime = computed(() => {
   const now = new Date();
-  switch(props.today) {
+  switch (props.today) {
     case 'date':
       return now.toLocaleDateString();
     case 'time':
@@ -16,7 +23,7 @@ const dateOrTime = computed(() => {
     default:
       return now.toLocaleString();
   }
-})
+});
 </script>
 
 <template>
@@ -29,11 +36,11 @@ const dateOrTime = computed(() => {
         널리쉬 연산자 => ??
         ?? 앞의 값이 undefined, null 이면 ?? 뒤의 값을 사용한다
       -->
-      Name: {{ name ?? 'UNKNOWN'}} <br />
+      Name: {{ name ?? 'UNKNOWN' }} <br />
       Age: {{ age ?? 0 }} <br />
       Check: {{ check }}<br />
       isChecked: {{ (isChecked ?? true) ? '동의' : '동의 안함' }} <br />
-      Address: {{ add }} <br>
+      Address: {{ add }} <br />
       <!-- {{ undefined[0] }} / {{ undefined.name }} / {{ undefined(10, 20) }}<br />
         옵셔널 체이닝 연산자 => ?.
         [index], .속성, ()로 참조하는 경우 ?. 앞이 undefined, null 이면 ?. 뒤를 평가하지 않고  
@@ -42,7 +49,6 @@ const dateOrTime = computed(() => {
       Array: {{ arr?.[0] ?? 100 }} / {{ arr?.[1] }} / {{ arr?.[2] }}<br />
       User: {{ user?.name }} / {{ user?.age }} / {{ user?.address }} <br />
       onAdd: {{ onAdd?.(20, 30) }} <br />
-      
     </div>
 
     <div class="mb-3">
@@ -77,4 +83,3 @@ export default {
 </template>
 
 -->
-

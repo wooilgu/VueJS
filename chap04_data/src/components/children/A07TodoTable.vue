@@ -1,7 +1,6 @@
-
 <script setup>
 import { inject } from 'vue';
-import A07TodoItem from './A07TodoItem.vue'
+import A07TodoItem from './A07TodoItem.vue';
 
 // const useTodo = inject('useTodo');
 // 디스트럭처링 const { todoList } = { todoList: [], text: 'A', update };

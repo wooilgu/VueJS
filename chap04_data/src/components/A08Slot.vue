@@ -1,17 +1,31 @@
 <script setup>
 import { ref } from 'vue';
-import A08SlotChild from './children/A08SlotChild.vue'
+import A08SlotChild from './children/A08SlotChild.vue';
 
 const name = ref('Adam');
-const changeName = (str) => name.value = str;
+const changeName = (str) => (name.value = str);
 </script>
 
 <template>
   <h3>A08 Slot</h3>
 
   <div class="mb-5">
-    <A08SlotChild></A08SlotChild>
-    <A08SlotChild></A08SlotChild>
+    <A08SlotChild>
+      <div>
+        <h3>전달할 View 01 / {{ name }}</h3>
+        <div>
+          전달되는 내용<br />
+          <button @click="() => changeName('ONE')">Name</button>
+        </div>
+      </div>
+    </A08SlotChild>
+    <A08SlotChild>
+      <h3>전달할 View 02 / {{ name }}</h3>
+      <div>
+        자식 컴포넌트의 slot이라는 태그 위치에 표시된다<br />
+        <button @click="() => changeName('TWO')">Name</button>
+      </div>
+    </A08SlotChild>
     <A08SlotChild></A08SlotChild>
   </div>
 </template>

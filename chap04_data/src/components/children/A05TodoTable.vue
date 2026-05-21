@@ -1,8 +1,7 @@
-
 <script setup>
-import A05TodoItem from './A05TodoItem.vue'
+import A05TodoItem from './A05TodoItem.vue';
 
-defineProps(['todoList', 'updateTodo', 'deleteTodo'])
+defineProps(['todoList', 'updateTodo', 'deleteTodo']);
 </script>
 
 <template>
@@ -52,4 +51,3 @@ export default {
   </table>
 </template>
 -->
-
