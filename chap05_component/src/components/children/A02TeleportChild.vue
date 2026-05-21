@@ -1,16 +1,15 @@
-
 <script setup>
 // npm i portal-vue
 // main.js에 등록부터 해야한다
-import { Portal } from 'portal-vue';
-import { reactive } from 'vue';
+import { Portal } from 'portal-vue'
+import { reactive } from 'vue'
 
 const modals = reactive({
   one: false,
   two: false,
-});
+})
 
-const toggleModal = (name, check) => (modals[name] = check);
+const toggleModal = (name, check) => (modals[name] = check)
 </script>
 
 <template>
@@ -26,9 +25,10 @@ const toggleModal = (name, check) => (modals[name] = check);
     <div class="dialog" v-show="modals.one">
       <h5>Home Component</h5>
       <p>
-        Vue (pronounced /vjuː/, like view) is a JavaScript framework for building user interfaces. 
-        It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and 
-        component-based programming model that helps you efficiently develop user interfaces, be it simple or complex.<br>
+        Vue (pronounced /vjuː/, like view) is a JavaScript framework for building user interfaces.
+        It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and
+        component-based programming model that helps you efficiently develop user interfaces, be it
+        simple or complex.<br />
       </p>
       <button @click="toggleModal('one', false)">HIDE</button>
     </div>
@@ -43,8 +43,9 @@ const toggleModal = (name, check) => (modals[name] = check);
     <div class="dialog" v-show="modals.two">
       <h5>News Component</h5>
       <p>
-        With Options API, we define a component's logic using an object of options such as data, methods, and mounted.
-        Properties defined by options are exposed on this inside functions, which points to the component instance
+        With Options API, we define a component's logic using an object of options such as data,
+        methods, and mounted. Properties defined by options are exposed on this inside functions,
+        which points to the component instance
       </p>
       <button @click="toggleModal('two', false)">HIDE</button>
     </div>
@@ -52,9 +53,18 @@ const toggleModal = (name, check) => (modals[name] = check);
 </template>
 
 <style scoped>
-  .dialog { position: fixed; top: 50px; left: 30%; width: 600px; height: 200px; z-index: 99999; border: 1px solid gray; background-color: white; padding: 10px; }  
+.dialog {
+  position: fixed;
+  top: 50px;
+  left: 30%;
+  width: 600px;
+  height: 200px;
+  z-index: 99999;
+  border: 1px solid gray;
+  background-color: white;
+  padding: 10px;
+}
 </style>
-
 
 <!--
 <script>

@@ -1,7 +1,4 @@
-
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
   <!-- 
@@ -10,7 +7,7 @@
   -->
   <div v-if="isError">
     <h5>Child Component</h5>
-  </div>  
+  </div>
 </template>
 
 <!--

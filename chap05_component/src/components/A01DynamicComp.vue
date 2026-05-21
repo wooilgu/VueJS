@@ -1,15 +1,14 @@
-
 <script setup>
 import A01BannerHome from './children/A01BannerHome.vue'
 import A01BannerAbout from './children/A01BannerAbout.vue'
 import A01BannerNews from './children/A01BannerNews.vue'
-import { shallowRef } from 'vue';
-import { PortalTarget } from 'portal-vue';
+import { shallowRef } from 'vue'
+import { PortalTarget } from 'portal-vue'
 
 // shallowRef => 할당된 변수의 값이 변경되는 경우만 리렌더링
 // 객체라면 객체 전체가 변경되는 경우만 반응한다
-const current = shallowRef(A01BannerAbout);
-const changeCurrent = (comp) => current.value = comp;
+const current = shallowRef(A01BannerAbout)
+const changeCurrent = (comp) => (current.value = comp)
 </script>
 
 <template>
@@ -34,7 +33,7 @@ const changeCurrent = (comp) => current.value = comp;
       <component :is="current"></component>
     </KeepAlive>
   </div>
-  
+
   <div class="mb-5">
     <button @click="() => changeCurrent(A01BannerHome)">HOME</button>
     <button @click="() => changeCurrent(A01BannerAbout)">ABOUT</button>
@@ -43,10 +42,19 @@ const changeCurrent = (comp) => current.value = comp;
 </template>
 
 <style scoped>
-  .banner { width: 700px; padding: 10px; border: 2px solid #CCC; border-radius: 5px; background-color: white; font-size: smaller; }
-  h5 { font-size: 150%; color: gray; }  
+.banner {
+  width: 700px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: smaller;
+}
+h5 {
+  font-size: 150%;
+  color: gray;
+}
 </style>
-
 
 <!-- 
 <script>
@@ -90,4 +98,3 @@ export default {
   h5 { font-size: 150%; color: gray; }  
 </style>
 -->
-

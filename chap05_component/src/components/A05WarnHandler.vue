@@ -1,5 +1,5 @@
 <script setup>
-  import A05WarnChild from './children/A05WarnChild.vue'
+import A05WarnChild from './children/A05WarnChild.vue'
 </script>
 
 <template>
@@ -7,7 +7,6 @@
 
   <A05WarnChild></A05WarnChild>
 </template>
-
 
 <!--
 <script>

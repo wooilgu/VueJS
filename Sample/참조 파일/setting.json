@@ -1,0 +1,34 @@
+{
+  "editor.fontSize": 22,
+  "files.autoSave": "onFocusChange",
+  "editor.defaultFormatter": "vscode.typescript-language-features",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.maxTokenizationLineLength": 2500,
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "explorer.compactFolders": false,
+  "terminal.integrated.fontSize": 22,
+  "workbench.colorTheme": "Dracula Theme Soft",
+  "workbench.iconTheme": "material-icon-theme",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.stickyScroll.enabled": false,
+  "editor.minimap.enabled": false,
+  "window.commandCenter": false,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "chat.titleBar.signIn.enabled": false,
+  "workbench.browser.showInTitleBar": false,
+  "prettier.vueIndentScriptAndStyle": true,
+  "prettier.singleQuote": true,
+  "prettier.singleAttributePerLine": true,
+  "prettier.printWidth": 100,
+  "prettier.endOfLine": "auto",
+  "prettier.bracketSameLine": true
+}

@@ -1,40 +1,36 @@
-
 <script setup>
-import { onErrorCaptured, ref } from 'vue';
+import { onErrorCaptured, ref } from 'vue'
 import A04ErrorChild from './children/A04ErrorChild.vue'
 import ErrorComp from './children/ErrorComp.vue'
 
-const hasError = ref(true);
+const hasError = ref(true)
 
 // 에러 상태 관리
 // 자신의 컴포넌트 에러는 캐치 못함. 자식 컴포넌트의 에러만 잡아 처리한다
 onErrorCaptured((err, vm, info) => {
-  console.error('----- A04Component -----');
-  console.error(err);       // Error 객체
-  console.error(vm);        // 에러가 발생한 컴포넌트
-  console.error(info);      // Vue가 제공하는 안내 
+  console.error('----- A04Component -----')
+  console.error(err) // Error 객체
+  console.error(vm) // 에러가 발생한 컴포넌트
+  console.error(info) // Vue가 제공하는 안내
 
-  hasError.value = false;   // 대체 컴포넌트를 표시 할 목적
+  hasError.value = false // 대체 컴포넌트를 표시 할 목적
 
   // return true;           // 상위 컴포넌트로 에러 전파 (default)
-  return false;
+  return false
 })
-
-
 </script>
 
 <template>
   <div v-if="hasError">
     <h3>A04 ErrorCaptured</h3>
-    
-    <hr>
-    
+
+    <hr />
+
     <A04ErrorChild></A04ErrorChild>
   </div>
   <div v-else>
     <ErrorComp></ErrorComp>
   </div>
-  
 </template>
 
 <!--

@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 
-const isError = true;
+const isError = true
 onMounted(() => {
   throw new Error('Child에서 발생한 예외...')
 })
@@ -10,7 +10,7 @@ onMounted(() => {
 <template>
   <div v-if="isError">
     <h5>Child Component</h5>
-  </div>  
+  </div>
 </template>
 
 <!--

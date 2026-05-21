@@ -3,7 +3,7 @@
 // npm i vue3-spinners p-min-delay
 // https://leonsilicon.github.io/vue3-spinners/
 // eslint-disable-next-line no-unused-vars
-import { defineAsyncComponent, Suspense } from 'vue';
+import { defineAsyncComponent, Suspense } from 'vue'
 // eslint-disable-next-line no-unused-vars
 import pMinDelay from 'p-min-delay'
 import { VueSpinnerDots } from 'vue3-spinners'
@@ -22,22 +22,27 @@ const A01About = defineAsyncComponent({
   loader() {
     // return pMinDelay(import('./children/A01BannerAbout.vue'), 2000);
     return new Promise((resolve, reject) => {
-      setTimeout((check) => {
-        if(check) resolve(import('./children/A01BannerAbout.vue'));
-        else reject(new Error('파일을 로드 할 수 없습니다...'))
-      }, 2000, true);     // false로 지정하면 에러 처리를 확인 가능
+      setTimeout(
+        (check) => {
+          if (check) resolve(import('./children/A01BannerAbout.vue'))
+          else reject(new Error('파일을 로드 할 수 없습니다...'))
+        },
+        2000,
+        true,
+      ) // false로 지정하면 에러 처리를 확인 가능
     })
   },
   onError(err, retry, fail, attemps) {
-    console.log(attemps);             // 실행 횟수
-    if(err && attemps < 3) retry();   // retry => 재 시도
-    else fail();                      // fail => 실패 처리
+    console.log(attemps) // 실행 횟수
+    if (err && attemps < 3)
+      retry() // retry => 재 시도
+    else fail() // fail => 실패 처리
   },
   loadingComponent: LoadComp,
   errorComponent: ErrorComp,
-  timeout: 5000,                // 5초 후에도 로드되지 않으면 에러 처리
-  suspensible: true,            // true => fallback 컴포넌트 사용, false => loadingComponent 사용
-  delay: 500,                   // loadingComponent를 사용하는 경우 화면에 표시되는 지연 시간 지정
+  timeout: 5000, // 5초 후에도 로드되지 않으면 에러 처리
+  suspensible: true, // true => fallback 컴포넌트 사용, false => loadingComponent 사용
+  delay: 500, // loadingComponent를 사용하는 경우 화면에 표시되는 지연 시간 지정
 })
 </script>
 
@@ -53,9 +58,18 @@ const A01About = defineAsyncComponent({
 </template>
 
 <style scoped>
-  .dialog { position: fixed; top: 50px; left: 30%; width: 600px; height: 200px; z-index: 99999; border: 1px solid gray; background-color: white; padding: 10px; }
+.dialog {
+  position: fixed;
+  top: 50px;
+  left: 30%;
+  width: 600px;
+  height: 200px;
+  z-index: 99999;
+  border: 1px solid gray;
+  background-color: white;
+  padding: 10px;
+}
 </style>
-
 
 <!--
 <script>
