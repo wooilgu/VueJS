@@ -1,6 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import PortalVue from 'portal-vue'
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(PortalVue);
+app.mount('#app')

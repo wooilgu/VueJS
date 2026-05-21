@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
-    "vue": "^3.5.32"
+    "p-min-delay": "^4.2.0",
+    "portal-vue": "^3.0.0",
+    "vue": "^3.5.32",
+    "vue3-spinners": "^1.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

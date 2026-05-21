@@ -4,6 +4,7 @@ import A01BannerHome from './children/A01BannerHome.vue'
 import A01BannerAbout from './children/A01BannerAbout.vue'
 import A01BannerNews from './children/A01BannerNews.vue'
 import { shallowRef } from 'vue';
+import { PortalTarget } from 'portal-vue';
 
 // shallowRef => 할당된 변수의 값이 변경되는 경우만 리렌더링
 // 객체라면 객체 전체가 변경되는 경우만 반응한다
@@ -12,6 +13,9 @@ const changeCurrent = (comp) => current.value = comp;
 </script>
 
 <template>
+  <!-- A02Teleport에서 popup이 이동할 위치 지정 -->
+  <PortalTarget name="dist"></PortalTarget>
+
   <h3>A01 Dynamic Component</h3>
 
   <!-- 

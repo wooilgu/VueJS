@@ -1,6 +1,8 @@
+
 <script setup>
 // npm i portal-vue
 // main.js에 등록부터 해야한다
+import { Portal } from 'portal-vue';
 import { reactive } from 'vue';
 
 const modals = reactive({
@@ -17,11 +19,10 @@ const toggleModal = (name, check) => (modals[name] = check);
     <button @click="toggleModal('two', true)">TWO SHOW</button>
   </div>
   <!-- 
-    1. 이동할 곳을 index.html에 지정한다. 
-    2. 이동할 컴포넌트를 Teleport로 감싸고 to 옵션으로 popup 지정
+    1. 이동할 곳을 index.html에 지정한다 => id: popup 
+    2. 이동할 컴포넌트를 <Teleport>로 감싸고 to 옵션으로 #popup 지정
   -->
-
-<Teleport to="#popup">
+  <Teleport to="#popup">
     <div class="dialog" v-show="modals.one">
       <h5>Home Component</h5>
       <p>
@@ -33,8 +34,12 @@ const toggleModal = (name, check) => (modals[name] = check);
     </div>
   </Teleport>
 
-
-
+  <!-- 
+    1.main.js에 등록부터 해야 한다.
+    2.A01DynamicComp의 맨 위 위치로 이동
+  
+  -->
+  <Portal to="dist">
     <div class="dialog" v-show="modals.two">
       <h5>News Component</h5>
       <p>
@@ -43,7 +48,7 @@ const toggleModal = (name, check) => (modals[name] = check);
       </p>
       <button @click="toggleModal('two', false)">HIDE</button>
     </div>
-
+  </Portal>
 </template>
 
 <style scoped>
