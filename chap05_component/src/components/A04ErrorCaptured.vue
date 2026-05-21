@@ -16,9 +16,11 @@ onErrorCaptured((err, vm, info) => {
 
   hasError.value = false;   // 대체 컴포넌트를 표시 할 목적
 
-  // return true;           // 상위 컴포넌트로 에러 전파
+  // return true;           // 상위 컴포넌트로 에러 전파 (default)
   return false;
 })
+
+
 </script>
 
 <template>
