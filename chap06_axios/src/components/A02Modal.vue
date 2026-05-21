@@ -1,6 +1,11 @@
 <script setup>
-import * as bootstrap from 'bootstrap/dist/js/bootstrap.esm.js'
-import { onMounted } from 'vue';
+// npm i p-min-delay vue3-spinners sweetalert2
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.esm.js';
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+import { VueSpinner } from 'vue3-spinners';
+import pMinDelay from 'p-min-delay';
+import Swal from 'sweetalert2';
 
 let contentModal = '';
 let updateModal = '';
@@ -32,10 +37,12 @@ const moveFocusToAddBtn = () => {
 const showUpdate = () => {
   contentModal.hide();
   updateModal.show();
-}
+};
 const showAddModal = () => {
+  // 기존의 데이터가 있는 경우 그 값을 싹 초기화 할 목적
+  contact.value = { no: '', name: '', tel: '', address: '', photo: '' };
   addModal.show();
-}
+};
 
 onMounted(() => {
   const getContentEl = document.getElementById('getContent');
@@ -52,94 +59,316 @@ onMounted(() => {
 });
 
 // 추가
+const contactList = ref({ pageno: '', pagesize: '', totalcount: '', contacts: [] });
+const contact = ref({ no: '', name: '', tel: '', address: '', photo: '' });
+const loading = ref(false);
+const isError = ref(false);
 
+// axios가 기본 설정과 다른 경우 이렇게 사용한다
+// 메서드 값 => create => default 순으로 참조한다.
+const apiClient = axios.create({
+  // baseURL: 'http://localhost:8000',
+  baseURL: '/api',
+  timeout: 3000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+});
+
+const getContactList = async (no = 1, size = 10) => {
+  loading.value = true;
+  try {
+    const resp = await pMinDelay(
+      apiClient.get(`/contacts`, { params: { pageno: no, pagesize: size } }),
+      1000,
+    );
+    contactList.value = resp.data;
+  } catch (err) {
+    console.error(err);
+    isError.value = true;
+  }
+  loading.value = false;
+};
+
+const getContact = async (no) => {
+  try {
+    const resp = await apiClient.get(`/contacts/${no}`);
+    contact.value = resp.data;
+    // console.log(resp.data);
+    console.log(contact.value);
+  } catch (err) {
+    console.error(err);
+    isError.value = true;
+  }
+
+  // modal 활성화
+  contentModal.show();
+};
+
+const deleteContact = async (no) => {
+  try {
+    const resp = await apiClient.delete(`/contacts/${no}`);
+    if (resp.data.status === 'success') {
+      Swal.fire({ title: 'SUCCESS', text: '데이터 삭제 성공', icon: 'success' });
+    } else if (resp.data.status === 'fail') {
+      Swal.fire({ title: 'FAIL', text: '데이터 삭제 실패', icon: 'error' });
+    }
+  } catch (err) {
+    console.error(err);
+    isError.value = true;
+  }
+
+  // modal 닫기
+  contentModal.hide();
+
+  // contactList 상태변수 변경을 위해 서버 다시 요청
+  getContactList(1, 5);
+};
+
+const updateContact = async (contact) => {
+  try {
+    const resp = await apiClient.put(`/contacts/${contact.no}`, contact);
+    if (resp.data.status === 'success') {
+      Swal.fire({ title: 'SUCCESS', text: '데이터 수정 성공', icon: 'success' });
+    } else if (resp.data.status === 'fail') {
+      Swal.fire({ title: 'FAIL', text: '데이터 수정 실패', icon: 'error' });
+    }
+  } catch (err) {
+    console.error(err);
+    isError.value = true;
+  }
+
+  // modal 닫기
+  updateModal.hide();
+
+  // contactList 상태변수 변경을 위해 서버 다시 요청
+  getContactList(1, 5);
+};
+
+const addContact = async (contact) => {
+  try {
+    const resp = await apiClient.post(`/contacts`, contact);
+    if (resp.data.status === 'success') {
+      Swal.fire({ title: 'SUCCESS', text: '데이터 입력 성공', icon: 'success' });
+    } else if (resp.data.status === 'fail') {
+      Swal.fire({ title: 'FAIL', text: '데이터 입력 실패', icon: 'error' });
+    }
+  } catch (err) {
+    console.error(err);
+    isError.value = true;
+  }
+
+  // modal 닫기
+  addModal.hide();
+
+  // contactList 상태변수 변경을 위해 서버 다시 요청
+  getContactList(1, 5);
+};
+
+onMounted(() => {
+  getContactList(1, 5);
+});
 </script>
 
 <template>
-  <div class="mb-5">
+  <div v-if="isError">
+    <h1>점검중...</h1>
+  </div>
+  <div v-if="loading">
+    <VueSpinner color="orange" size="100"></VueSpinner>
+  </div>
+  <div class="mb-5" v-if="!isError && !loading">
     <table class="table">
       <thead>
-        <tr><th>No</th><th>Name</th><th>Tel</th><th>Address</th><th>Photo</th></tr>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Tel</th>
+          <th>Address</th>
+          <th>Photo</th>
+        </tr>
       </thead>
       <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr v-for="contact in contactList.contacts" :key="contact.no">
+          <td>{{ contact.no }}</td>
+          <td>
+            <a href="javascript:;" @click="getContact(contact.no)">{{ contact.name }}</a>
+          </td>
+          <td>{{ contact.tel }}</td>
+          <td>{{ contact.address }}</td>
+          <td>{{ contact.photo }}</td>
         </tr>
       </tbody>
     </table>
     <button class="btn btn-primary" id="addBtn" @click="showAddModal">ADD</button>
 
     <!-- Get Contact Modal -->
-    <div class="modal fade" id="getContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="getContent"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Get Contact</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
-              Name: <input type="text" class="form-control" disabled/>
-              Tel: <input type="text" class="form-control" disabled/>
-              Address: <input type="text" class="form-control" disabled/>
+            Name: {{ contact.name }}
+            <input type="text" class="form-control" disabled :value="contact.name" />
+            Tel:
+            <input type="text" class="form-control" disabled :value="contact.tel" />
+            Address:
+            <input type="text" class="form-control" disabled :value="contact.address" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" @click="moveFocusToAddBtn">CLOSE</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">DELETE</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">UPDATE</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="moveFocusToAddBtn"
+            >
+              CLOSE
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="() => deleteContact(contact.no)"
+            >
+              DELETE
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="showUpdate"
+            >
+              UPDATE
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Update Contact Modal -->
-    <div class="modal fade" id="updateContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="updateContent"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Update Contact</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
-              Name: <input type="text" class="form-control"/>
-              Tel: <input type="text" class="form-control"/>
-              Address: <input type="text" class="form-control"/>
+            Name:
+            <!-- v-model는 값 체크 안됨 => :value="값" @input="이벤트" 형태로 구현해서 값 체크 해야 한다 -->
+            <input type="text" class="form-control" v-model="contact.name" />
+            Tel:
+            <input type="text" class="form-control" v-model="contact.tel" />
+            Address:
+            <input type="text" class="form-control" v-model="contact.address" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" @click="moveFocusToAddBtn">CLOSE</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">UPDATE</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="moveFocusToAddBtn"
+            >
+              CLOSE
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="() => updateContact(contact)"
+            >
+              UPDATE
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Add Contact Modal -->
-    <div class="modal fade" id="addContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="addContent"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Add Contact</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
-            Name: <input type="text" class="form-control"/>
-            Tel: <input type="text" class="form-control"/>
-            Address: <input type="text" class="form-control"/>
+            Name:
+            <input type="text" class="form-control" v-model="contact.name" />
+            Tel:
+            <input type="text" class="form-control" v-model="contact.tel" />
+            Address:
+            <input type="text" class="form-control" v-model="contact.address" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" @click="moveFocusToAddBtn">CLOSE</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ADD</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="moveFocusToAddBtn"
+            >
+              CLOSE
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="() => addContact(contact)"
+            >
+              ADD
+            </button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
-
 
 <!--
 <script>
