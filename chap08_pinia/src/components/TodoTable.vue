@@ -1,5 +1,8 @@
 <script setup>
-import TodoItem from './TodoItem.vue';
+import TodoItem from './TodoItem.vue'
+import useTodoStore from './../stores/todoStore'
+
+const store = useTodoStore()
 </script>
 
 <template>
@@ -7,18 +10,17 @@ import TodoItem from './TodoItem.vue';
     <table class="table">
       <thead>
         <tr>
-          <th :style="{width:'10%'}">ID</th>
+          <th :style="{ width: '10%' }">ID</th>
           <th>Todo</th>
-          <th :style="{width:'10%'}">Complete</th>
-          <th :style="{width:'10%'}">Delete</th>
+          <th :style="{ width: '10%' }">Complete</th>
+          <th :style="{ width: '10%' }">Delete</th>
         </tr>
       </thead>
       <tbody>
-        <template>
-          <TodoItem />
+        <template v-for="todo in store.todoList" :key="todo.id">
+          <TodoItem :todo="todo" />
         </template>
       </tbody>
     </table>
   </div>
 </template>
-
