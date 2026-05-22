@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 
 const route = useRoute() // 주소줄 정보
 const router = useRouter() // 링크에 관련된 메서드
@@ -26,6 +26,20 @@ const goURL = (url) => {
     router.push({ ...url, replace: true })
   }
 }
+
+// Guard
+// params와 query가 변경되는 경우 실행
+onBeforeRouteUpdate(() => {
+  console.log('----- 컴포넌트 => onBeforeRouteUpdate -----')
+  const session = window.localStorage
+  return session.getItem('address') ? true : false
+})
+// 다른 컴포넌트로 이동하는 경우
+onBeforeRouteLeave(() => {
+  console.log('----- 컴포넌트 => onBeforeRouteLeave -----')
+  const session = window.localStorage
+  return session.getItem('tel') ? true : false
+})
 </script>
 
 <template>

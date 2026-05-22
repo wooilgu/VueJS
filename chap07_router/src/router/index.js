@@ -58,7 +58,12 @@ const routes = [
   // 버튼을 이용한 이동
   {
     path: '/A07Push', name: 'push', /* component: A07Push */
-    component: () => import('./../views/A07Push.vue')
+    component: () => import('./../views/A07Push.vue'),
+    // 진입 Guard
+    beforeEnter(to, from) {
+      console.log('----- 컴포넌트 => beforeEnter ------');
+      return storage.getItem('name') ? true : false;
+    }
   },
 
   // 자식 라우터 구성
@@ -93,6 +98,9 @@ const router = createRouter({
 const storage = window.localStorage;
 // login
 storage.setItem('id', 'abc123');
+storage.setItem('name', 'abc123');
+storage.setItem('address', 'abc123');
+storage.setItem('tel', 'abc123');
 
 // logout
 // storage.removeItem('id');
