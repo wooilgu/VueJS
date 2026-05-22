@@ -1,16 +1,31 @@
 <script setup>
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute() // 주소줄 정보
+const router = useRouter() // 링크에 관련된 메서드
+console.log(route)
+console.log(router)
+
 const back = () => {
-
-};
+  router.back()
+  // router.go(-1);
+}
 const forward = () => {
-
-};
+  router.forward()
+  // router.go(1);
+}
 const goHome = () => {
-
-};
-const goURL = () => {
-
-};
+  router.push('/')
+  // router.push('/Attr');
+}
+const goURL = (url) => {
+  if (typeof url === 'string') {
+    // replace: true => history 정보를 남기지 않고 이동. <-(뒤로가기)에서 제외
+    router.push({ path: url, replace: true })
+  } else {
+    router.push({ ...url, replace: true })
+  }
+}
 </script>
 
 <template>
@@ -18,15 +33,21 @@ const goURL = () => {
     <h3>A07 Push</h3>
 
     <div>
-      <button   @click="back">BACK</button>
-      <button   @click="forward">FORWARD</button>
-      <button   @click="goHome">HOME</button>
-      <button   @click="goURL('/A02Attr')">A02Attr</button>
+      <button @click="back">BACK</button>
+      <button @click="forward">FORWARD</button>
+      <button @click="goHome">HOME</button>
+      <button @click="goURL('/A02Attr')">A02Attr</button>
 
       <!-- 객체 형태의 데이터 전달은 name 사용 -->
-      <button>A02Attr</button>
-      <button>Params</button>
-      <button>Query</button>
+      <button @click="goURL({ name: 'attr' })">A02Attr</button>
+      <button @click="goURL({ name: 'param', params: { no: '1001', name: 'ABC', sno: 1 } })">
+        Params
+      </button>
+      <button
+        @click="goURL({ name: 'query', query: { no: '1002', name: 'DEF', sno: 2 }, hash: '#BTM' })"
+      >
+        Query
+      </button>
     </div>
   </div>
 </template>

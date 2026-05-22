@@ -7,6 +7,8 @@
     <div>
       <RouterLink to="/" exact-active-class="active">INDEX</RouterLink> |
       <RouterLink to="/A01Bind" exact-active-class="active">BIND</RouterLink> |
+      <RouterLink to="/sample" exact-active-class="active">Sample</RouterLink> |
+
       <RouterLink :to="{ name: 'attr' }" exact-active-class="active">A02ATTR</RouterLink> |
 
       <RouterLink to="/A03Params/1001/놀부/11" exact-active-class="active">P1001</RouterLink> |
@@ -27,7 +29,7 @@
 
       <RouterLink to="/A06Query?no=1001&name=Adam&sno=15#TOP">Q1005</RouterLink> |
       <RouterLink
-        :to="{ name: 'query', query: { no: 1004, name: '홍길동', sno: 16 }, hash: '#MID' }"
+        :to="{ name: 'query', query: { no: 1006, name: '홍길동', sno: 16 }, hash: '#MID' }"
         >Q1006</RouterLink
       >
       |
@@ -35,12 +37,20 @@
       <RouterLink :to="{ name: 'push' }">PUSH</RouterLink> |
 
       <RouterLink :to="{ name: 'child' }">CHILD</RouterLink> |
+      <RouterLink to="/A08Child/way">WAY</RouterLink> |
+      <RouterLink :to="{ name: 'info' }">INFO</RouterLink> |
+
+      <RouterLink to="/ABC">ABC</RouterLink> |
     </div>
 
     <hr />
 
     <div class="mb-3">
       <RouterView></RouterView>
+
+      <hr />
+
+      <RouterView name="footer"></RouterView>
     </div>
   </div>
 </template>

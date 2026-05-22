@@ -190,180 +190,174 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="contact in contactList.contacts" :key="contact.no">
-          <td>{{ contact.no }}</td>
+        <tr v-for="item in contactList.contacts" :key="item.no">
+          <td>{{ item.no }}</td>
           <td>
-            <a href="javascript:;" @click="getContact(contact.no)">{{ contact.name }}</a>
+            <a href="javascript:;" @click="getContact(item.no)">{{ item.name }}</a>
           </td>
-          <td>{{ contact.tel }}</td>
-          <td>{{ contact.address }}</td>
-          <td>{{ contact.photo }}</td>
+          <td>{{ item.tel }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.photo }}</td>
         </tr>
       </tbody>
     </table>
     <button class="btn btn-primary" id="addBtn" @click="showAddModal">ADD</button>
+  </div>
 
-    <!-- Get Contact Modal -->
-    <div
-      class="modal fade"
-      id="getContent"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Get Contact</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            Name: {{ contact.name }}
-            <input type="text" class="form-control" disabled :value="contact.name" />
-            Tel:
-            <input type="text" class="form-control" disabled :value="contact.tel" />
-            Address:
-            <input type="text" class="form-control" disabled :value="contact.address" />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click="moveFocusToAddBtn"
-            >
-              CLOSE
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="() => deleteContact(contact.no)"
-            >
-              DELETE
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="showUpdate"
-            >
-              UPDATE
-            </button>
-          </div>
+  <div
+    class="modal fade"
+    id="getContent"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Get Contact</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Name: {{ contact.name }}
+          <input type="text" class="form-control" disabled :value="contact.name" />
+          Tel:
+          <input type="text" class="form-control" disabled :value="contact.tel" />
+          Address:
+          <input type="text" class="form-control" disabled :value="contact.address" />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="moveFocusToAddBtn"
+          >
+            CLOSE
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="() => deleteContact(contact.no)"
+          >
+            DELETE
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="showUpdate">
+            UPDATE
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Update Contact Modal -->
-    <div
-      class="modal fade"
-      id="updateContent"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Update Contact</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            Name:
-            <!-- v-model는 값 체크 안됨 => :value="값" @input="이벤트" 형태로 구현해서 값 체크 해야 한다 -->
-            <input type="text" class="form-control" v-model="contact.name" />
-            Tel:
-            <input type="text" class="form-control" v-model="contact.tel" />
-            Address:
-            <input type="text" class="form-control" v-model="contact.address" />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click="moveFocusToAddBtn"
-            >
-              CLOSE
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="() => updateContact(contact)"
-            >
-              UPDATE
-            </button>
-          </div>
+  <!-- Update Contact Modal -->
+  <div
+    class="modal fade"
+    id="updateContent"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Update Contact</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Name:
+          <!-- v-model는 값 체크 안됨 => :value="값" @input="이벤트" 형태로 구현해서 값 체크 해야 한다 -->
+          <input type="text" class="form-control" v-model="contact.name" />
+          Tel:
+          <input type="text" class="form-control" v-model="contact.tel" />
+          Address:
+          <input type="text" class="form-control" v-model="contact.address" />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="moveFocusToAddBtn"
+          >
+            CLOSE
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="() => updateContact(contact)"
+          >
+            UPDATE
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Add Contact Modal -->
-    <div
-      class="modal fade"
-      id="addContent"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Add Contact</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            Name:
-            <input type="text" class="form-control" v-model="contact.name" />
-            Tel:
-            <input type="text" class="form-control" v-model="contact.tel" />
-            Address:
-            <input type="text" class="form-control" v-model="contact.address" />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              @click="moveFocusToAddBtn"
-            >
-              CLOSE
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="() => addContact(contact)"
-            >
-              ADD
-            </button>
-          </div>
+  <!-- Add Contact Modal -->
+  <div
+    class="modal fade"
+    id="addContent"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Add Contact</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Name:
+          <input type="text" class="form-control" v-model="contact.name" />
+          Tel:
+          <input type="text" class="form-control" v-model="contact.tel" />
+          Address:
+          <input type="text" class="form-control" v-model="contact.address" />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="moveFocusToAddBtn"
+          >
+            CLOSE
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="() => addContact(contact)"
+          >
+            ADD
+          </button>
         </div>
       </div>
     </div>
