@@ -1,6 +1,6 @@
 <script setup>
-import contactlist from './data/ContactList';
-const contacts = contactlist.contacts;
+import contactlist from './data/ContactList'
+const contacts = contactlist.contacts
 </script>
 
 <template>
@@ -9,7 +9,10 @@ const contacts = contactlist.contacts;
 
     <div class="mb-3">
       <span v-for="item in contacts" :key="item.no">
-        <RouterLink :to="{name: 'contactChild'}">{{ item.name }}</RouterLink> | 
+        <RouterLink :to="{ name: 'contactChild', params: { no: item.no } }">{{
+          item.name
+        }}</RouterLink>
+        |
       </span>
     </div>
   </div>

@@ -1,25 +1,67 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
-import contactlist from './data/ContactList';
-const contacts = contactlist.contacts;
+import { useRoute } from 'vue-router'
+import { computed, onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue'
+import axios from 'axios'
+
+import contactlist from './data/ContactList'
+const contacts = contactlist.contacts
+
+// 주소줄에 관련된 데이터 관리 객체
+const route = useRoute()
+console.log(route)
+
+const user = computed(() => contacts.find((item) => item.no === Number(route.query.no)))
+// console.log(user)
+
+const contact = ref({ no: '', name: '', tel: '' })
+
+const getContact = async (sno) => {
+  try {
+    const resp = await axios.get(`http://localhost:8000/contacts/${sno}`)
+    contact.value = resp.data
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// 이 컴포넌트가 최초 화면에 표시될때 1번만 실행된다
+// onMounted(() => {
+//   getContact(route.query.sno)
+// });
+
+// onMounted가 최초 1번만 발생되므로 해결책
+const stopWatch = watch(
+  () => route.query.sno,
+  (newVal) => getContact(newVal),
+  {
+    immediate: true, // onMounted 대체 가능
+  },
+)
+
+onBeforeUnmount(() => {
+  stopWatch()
+})
 </script>
 
 <template>
   <div>
-    <h3>A06 Query</h3>
+    <h3>A03 Params</h3>
 
     <div class="mb-3">
-      ID: <br />
-      Name: <br>
-      No: <br>
-      Person: <br>
-      Hash: 
+      PATH: {{ decodeURIComponent(route.path) }} <br />
+      FULL: {{ decodeURIComponent(route.fullPath) }}<br />
+      HASH: {{ route.hash }} <br />
+      No: {{ route.query.no }}<br />
+      Name: {{ route.query.name }}<br />
+      Person: {{ user.no }} / {{ user.name }}<br />
     </div>
 
     <div class="mb-3">
-      NO: <br />
-      NAME: <br>
-      TEL: <br>
-      ADDRESS: <br>
+      NO: {{ contact.no }}<br />
+      NAME: {{ contact.name }}<br />
+      TEL: {{ contact.tel }}<br />
+      ADDRESS: {{ contact.address }}<br />
     </div>
   </div>
 </template>

@@ -1,7 +1,10 @@
 <script setup>
-import contactlist from './data/ContactList';
-const contacts = contactlist.contacts;
+import { computed } from 'vue'
+import contactlist from './data/ContactList'
+const contacts = contactlist.contacts
 
+const props = defineProps(['no'])
+const user = computed(() => contacts.find((item) => item.no === Number(props.no)))
 </script>
 
 <template>

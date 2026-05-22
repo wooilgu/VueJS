@@ -1,14 +1,49 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
-import { shallowRef } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
+import { computed, onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue'
 import axios from 'axios'
 
-import contactlist from './data/ContactList';
+import contactlist from './data/ContactList'
+const contacts = contactlist.contacts
 
-const contacts = contactlist.contacts;
-const contact = shallowRef({ no: '', name: '', tel: '', address: '', photo: '' });
+// router 설정에서 props: true 인 경우만 이렇게 값을 받아 사용 가능
+const props = defineProps(['no', 'name', 'sno'])
 
-// 컴포넌트는 그대로인데 주소창의 파라미터만 바뀔 때 실행.
+// 주소줄에 관련된 데이터 관리 객체
+const route = useRoute()
+
+const user = computed(() => contacts.find((item) => item.no === Number(props.no)))
+// console.log(user)
+
+const contact = ref({ no: '', name: '', tel: '' })
+
+const getContact = async (sno) => {
+  try {
+    const resp = await axios.get(`http://localhost:8000/contacts/${sno}`)
+    contact.value = resp.data
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// 이 컴포넌트가 최초 화면에 표시될때 1번만 실행된다
+// onMounted(() => {
+//   getContact(props.sno)
+// });
+
+// onMounted가 최초 1번만 발생되므로 해결책
+const stopWatch = watch(
+  () => props.sno,
+  (newVal) => getContact(newVal),
+  {
+    immediate: true, // onMounted 대체 가능
+  },
+)
+
+onBeforeUnmount(() => {
+  stopWatch()
+})
 </script>
 
 <template>
@@ -16,18 +51,18 @@ const contact = shallowRef({ no: '', name: '', tel: '', address: '', photo: '' }
     <h3>A04 Props</h3>
 
     <div class="mb-3">
-      PATH: <br />
-      FULL: <br />
-      No: <br />
-      Name: <br />
-      Person: <br />
+      PATH: {{ decodeURIComponent(route.path) }} <br />
+      FULL: {{ decodeURIComponent(route.fullPath) }}<br />
+      No: {{ no }}<br />
+      Name: {{ name }}<br />
+      Person: {{ user.no }} / {{ user.name }}<br />
     </div>
 
     <div class="mb-3">
-      NO: <br />
-      NAME: <br />
-      TEL: <br />
-      ADDRESS: <br />
+      NO: {{ contact.no }}<br />
+      NAME: {{ contact.name }}<br />
+      TEL: {{ contact.tel }}<br />
+      ADDRESS: {{ contact.address }}<br />
     </div>
   </div>
 </template>
