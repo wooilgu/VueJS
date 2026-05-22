@@ -28,4 +28,9 @@ export default defineConfig([
 
   skipFormatting,
 
+  {
+    rules: {
+      'no-unused-vars': 'warn'
+    }
+  }
 ])

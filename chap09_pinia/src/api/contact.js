@@ -1,4 +1,3 @@
-
 // npm i p-min-delay
 import axios from 'axios';
 import pMinDelay from 'p-min-delay'
@@ -38,4 +37,3 @@ export const updatePhoto = async (no, file) => {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
 };
-

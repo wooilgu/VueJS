@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from './../views/HomeComp.vue';
-import About from './../views/AboutComp.vue';
-import GetContactList from './../views/GetContactList.vue';
+import Home from '@views/HomeComp.vue';
+import About from '@views/AboutComp.vue';
+import GetContactList from '@views/GetContactList.vue';
 import GetContact from './../views/GetContact.vue';
 import AddContact from './../views/AddContact.vue';
 import UpdateContact from './../views/UpdateContact.vue';
-import UpdatePhoto from './../views/UpdatePhoto.vue';
+import UpdatePhoto from '@views/UpdatePhoto.vue';
 
 const routes = [
   { path: '/', name: 'home', component: Home },

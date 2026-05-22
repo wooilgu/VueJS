@@ -1,4 +1,3 @@
-
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -114,4 +113,3 @@ export const useContactStore = defineStore('contactStore', () => {
 
   return { contact, contactList, isLoading, isError, getContactList, getContact, addContact, updateContact, deleteContact, updatePhoto, changeContact, clearContact };
 });
-
